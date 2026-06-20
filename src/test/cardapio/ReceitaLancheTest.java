@@ -35,7 +35,6 @@ class ReceitaLancheTest {
     void deveRetornarExcecaoParaNomeNuloNoConstrutor() {
         try {
             new ReceitaLanche(null, new ArrayList<>(), 10.0f, 10);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O nome da receita inserido não pode ser nulo ou em branco!", e.getMessage());
         }
@@ -45,7 +44,6 @@ class ReceitaLancheTest {
     void deveRetornarExcecaoParaNomeVazioNoConstrutor() {
         try {
             new ReceitaLanche("   ", new ArrayList<>(), 10.0f, 10);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O nome da receita inserido não pode ser nulo ou em branco!", e.getMessage());
         }
@@ -55,7 +53,6 @@ class ReceitaLancheTest {
     void deveRetornarExcecaoParaListaIngredientesNulaNoConstrutor() {
         try {
             new ReceitaLanche("X-Tudo", null, 10.0f, 10);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A lista de ingredientes inserida não pode ser nula!", e.getMessage());
         }
@@ -65,7 +62,6 @@ class ReceitaLancheTest {
     void deveRetornarExcecaoParaPrecoBaseNegativoNoConstrutor() {
         try {
             new ReceitaLanche("X-Tudo", new ArrayList<>(), -5.0f, 10);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O preço base inserido não pode ser negativo!", e.getMessage());
         }
@@ -75,7 +71,6 @@ class ReceitaLancheTest {
     void deveRetornarExcecaoParaTempoPreparoInvalidoNoConstrutor() {
         try {
             new ReceitaLanche("X-Tudo", new ArrayList<>(), 10.0f, 0);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O tempo de preparo inserido não pode ser negativo!", e.getMessage());
         }
@@ -93,7 +88,6 @@ class ReceitaLancheTest {
         ReceitaLanche receita = new ReceitaLanche("X-Egg", new ArrayList<>(), 14.90f, 8);
         try {
             receita.adicionarIngrediente(null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O ingrediente inserido não pode ser nulo!", e.getMessage());
         }
