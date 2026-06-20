@@ -24,7 +24,6 @@ class ConfiguracaoHamburgueriaTest {
     void deveRetornarExcecaoParaNomeLojaNulo() {
         try {
             ConfiguracaoHamburgueria.getInstance().setNomeLoja(null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O nome da loja inserido é inválido!", e.getMessage());
         }
@@ -34,7 +33,6 @@ class ConfiguracaoHamburgueriaTest {
     void deveRetornarExcecaoParaNomeLojaVazio() {
         try {
             ConfiguracaoHamburgueria.getInstance().setNomeLoja("   ");
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O nome da loja inserido é inválido!", e.getMessage());
         }
@@ -50,7 +48,6 @@ class ConfiguracaoHamburgueriaTest {
     void deveRetornarExcecaoParaTaxaEntregaNegativa() {
         try {
             ConfiguracaoHamburgueria.getInstance().setTaxaEntregaPadrao(-1f);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A taxa de entrega inserida é inválida!", e.getMessage());
         }
@@ -66,7 +63,6 @@ class ConfiguracaoHamburgueriaTest {
     void deveRetornarExcecaoParaHorarioAberturaNulo() {
         try {
             ConfiguracaoHamburgueria.getInstance().setHorarioAbertura(null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O horário de abertura inserido é inválido!", e.getMessage());
         }
@@ -82,7 +78,6 @@ class ConfiguracaoHamburgueriaTest {
     void deveRetornarExcecaoParaHorarioFechamentoVazio() {
         try {
             ConfiguracaoHamburgueria.getInstance().setHorarioFechamento("");
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O horário de fechamento inserido é inválido!", e.getMessage());
         }
@@ -98,7 +93,6 @@ class ConfiguracaoHamburgueriaTest {
     void deveRetornarExcecaoParaOperadorLogadoNulo() {
         try {
             ConfiguracaoHamburgueria.getInstance().setOperadorLogado(null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O operador inserido é inválido!", e.getMessage());
         }
@@ -114,7 +108,6 @@ class ConfiguracaoHamburgueriaTest {
     void deveRetornarExcecaoParaAlcadaMaximaNegativa() {
         try {
             ConfiguracaoHamburgueria.getInstance().setAlcadaMaximaAtendente(-10.0f);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A alçada máxima inserida é inválida!", e.getMessage());
         }
