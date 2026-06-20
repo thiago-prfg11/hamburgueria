@@ -3,6 +3,7 @@ package main.cardapio;
 public abstract class ItemCardapio {
 
     private String descricao;
+    private boolean disponivel = true;
 
     public ItemCardapio(String descricao) {
         if (descricao == null || descricao.isBlank()) {
@@ -17,9 +18,17 @@ public abstract class ItemCardapio {
 
     public void setDescricao(String descricao) {
         if (descricao == null || descricao.isBlank()) {
-            throw new IllegalArgumentException("A descrição inserida para o item é inválida!");
+            throw new IllegalArgumentException("A descrição do item é inválida!");
         }
         this.descricao = descricao;
+    }
+
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
     }
 
     public abstract float getPreco();
