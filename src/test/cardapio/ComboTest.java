@@ -70,7 +70,7 @@ class ComboTest {
         try {
             combo.addItem(null);
         } catch (IllegalArgumentException e) {
-            assertEquals("O item inserido não pode ser nulo!", e.getMessage());
+            assertEquals("O item a ser adicionado não pode ser nulo!", e.getMessage());
         }
     }
 
@@ -99,7 +99,7 @@ class ComboTest {
         try {
             new Combo("Combo Inválido", -5f);
         } catch (IllegalArgumentException e) {
-            assertEquals("A quantidade de desconto do combo é inválida!", e.getMessage());
+            assertEquals("O desconto no valor final do combo deve estar entre 0 e 100!", e.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ class ComboTest {
         try {
             new Combo("Combo Inválido", 150f);
         } catch (IllegalArgumentException e) {
-            assertEquals("A quantidade de desconto do combo é inválida!", e.getMessage());
+            assertEquals("O desconto no valor final do combo deve estar entre 0 e 100!", e.getMessage());
         }
     }
 }

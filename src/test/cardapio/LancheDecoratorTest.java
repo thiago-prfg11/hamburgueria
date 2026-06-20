@@ -131,16 +131,16 @@ class LancheDecoratorTest {
         try {
             new AdicionalBacon(null);
         } catch (IllegalArgumentException e) {
-            assertEquals("O item a ser adicionado não pode ser nulo!", e.getMessage());
+            assertEquals("O item buscado não pode ser nulo!", e.getMessage());
         }
     }
 
     @Test
-    void deveRetornarExcecaoParaItemQueNaoEhLanche() {
+    void deveRetornarExcecaoParaItemQueNaoELanche() {
         try {
             new AdicionalBacon(new Bebida("Refrigerante", 6.0f, 140));
         } catch (IllegalArgumentException e) {
-            assertEquals("Somente lanches podem receber adicionais!", e.getMessage());
+            assertEquals("Somente lanches podem receber itens adicionais!", e.getMessage());
         }
     }
 
@@ -150,7 +150,7 @@ class LancheDecoratorTest {
         try {
             lanche.setDescricao("Outra Descrição");
         } catch (UnsupportedOperationException e) {
-            assertEquals("A descrição de um item decorado é derivada automaticamente!", e.getMessage());
+            assertEquals("A descrição de um item decorado é derivada automaticamente, não podendo ser alterada!", e.getMessage());
         }
     }
 }

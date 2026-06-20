@@ -18,7 +18,7 @@ class BebidaTest {
         try {
             new Bebida("Suco Natural", -2.0f, 90);
         } catch (IllegalArgumentException e) {
-            assertEquals("O preço da bebida é inválido!", e.getMessage());
+            assertEquals("O preço da bebida não pode ser negativo!", e.getMessage());
         }
     }
 
@@ -27,7 +27,7 @@ class BebidaTest {
         try {
             new Bebida("Água com Gás", 4.0f, -1);
         } catch (IllegalArgumentException e) {
-            assertEquals("A quantidade de calorias da bebida é inválida!", e.getMessage());
+            assertEquals("A quantidade de calorias não pode ser negativa!", e.getMessage());
         }
     }
 

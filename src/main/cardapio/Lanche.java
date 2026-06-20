@@ -26,7 +26,7 @@ public class Lanche extends ItemCardapio {
 
     private static String extrairNome(ReceitaLanche receita) {
         if (receita == null) {
-            throw new IllegalArgumentException("A receita fornecida não é válida!");
+            throw new IllegalArgumentException("A receita fornecida não pode ser nula!");
         }
         return receita.getNome();
     }

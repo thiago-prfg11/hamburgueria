@@ -8,7 +8,7 @@ public class Bebida extends ItemCardapio {
     public Bebida(String descricao, float preco, int calorias) {
         super(descricao);
         if (preco < 0) {
-            throw new IllegalArgumentException("O preço da bebida não pode ser negativo");
+            throw new IllegalArgumentException("O preço da bebida não pode ser negativo!");
         }
         if (calorias < 0) {
             throw new IllegalArgumentException("A quantidade de calorias não pode ser negativa!");

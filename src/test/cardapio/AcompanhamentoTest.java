@@ -18,7 +18,7 @@ class AcompanhamentoTest {
         try {
             new Acompanhamento("Onion Rings", -3.0f, 350);
         } catch (IllegalArgumentException e) {
-            assertEquals("O preço do acompanhamento é inválido!", e.getMessage());
+            assertEquals("O preço do acompanhamento não pode ser negativo!", e.getMessage());
         }
     }
 
@@ -27,7 +27,7 @@ class AcompanhamentoTest {
         try {
             new Acompanhamento("Nuggets", 12.0f, -5);
         } catch (IllegalArgumentException e) {
-            assertEquals("A quantidade de calorias do acompanhamento é inválido!", e.getMessage());
+            assertEquals("A quantidade de calorias não pode ser negativa!", e.getMessage());
         }
     }
 }

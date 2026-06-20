@@ -38,7 +38,7 @@ class LancheTest {
         try {
             new Lanche((ReceitaLanche) null);
         } catch (IllegalArgumentException e) {
-            assertEquals("O nome da receita não pode ser nulo!", e.getMessage());
+            assertEquals("A receita fornecida não pode ser nula!", e.getMessage());
         }
     }
 
@@ -69,7 +69,7 @@ class LancheTest {
         try {
             new Lanche("X-Tudo", 25.0f, null);
         } catch (IllegalArgumentException e) {
-            assertEquals("O lanche deve ter ao menos um ingrediente!", e.getMessage());
+            assertEquals("A lista de ingredientes do lanche não pode ser nula ou vazia!", e.getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ class LancheTest {
         try {
             new Lanche("X-Tudo", 25.0f, new ArrayList<>());
         } catch (IllegalArgumentException e) {
-            assertEquals("O lanche deve ter ao menos um ingrediente!", e.getMessage());
+            assertEquals("A lista de ingredientes do lanche não pode ser nula ou vazia!", e.getMessage());
         }
     }
 
