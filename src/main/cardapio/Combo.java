@@ -11,15 +11,15 @@ public class Combo extends ItemCardapio {
     public Combo(String descricao, float descontoPercentual) {
         super(descricao);
         if (descontoPercentual < 0 || descontoPercentual > 100) {
-            throw new IllegalArgumentException("A quantidade de desconto do combo é inválida!");
+            throw new IllegalArgumentException("O desconto no valor final do combo deve estar entre 0 e 100!");
         }
         this.descontoPercentual = descontoPercentual;
-        this.itens = new ArrayList<>();
+        this.itens = new ArrayList<ItemCardapio>();
     }
 
     public void addItem(ItemCardapio item) {
         if (item == null) {
-            throw new IllegalArgumentException("O item inserido não pode ser nulo!");
+            throw new IllegalArgumentException("O item a ser adicionado não pode ser nulo!");
         }
         if (item == this) {
             throw new IllegalArgumentException("Um combo não pode conter a si mesmo!");
@@ -32,7 +32,7 @@ public class Combo extends ItemCardapio {
     }
 
     public List<ItemCardapio> getItens() {
-        return new ArrayList<>(this.itens);
+        return new ArrayList<ItemCardapio>(this.itens);
     }
 
     public float getDescontoPercentual() {
@@ -56,6 +56,11 @@ public class Combo extends ItemCardapio {
             total += item.getCalorias();
         }
         return total;
+    }
+
+    @Override
+    public String aceitar(VisitorItemCardapio visitor) {
+        return visitor.visitarCombo(this);
     }
 
     @Override

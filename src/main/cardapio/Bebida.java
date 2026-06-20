@@ -8,10 +8,10 @@ public class Bebida extends ItemCardapio {
     public Bebida(String descricao, float preco, int calorias) {
         super(descricao);
         if (preco < 0) {
-            throw new IllegalArgumentException("O preço da bebida é inválido!");
+            throw new IllegalArgumentException("O preço da bebida não pode ser negativo");
         }
         if (calorias < 0) {
-            throw new IllegalArgumentException("A quantidade de calorias da bebida é inválida!");
+            throw new IllegalArgumentException("A quantidade de calorias não pode ser negativa!");
         }
         this.preco = preco;
         this.calorias = calorias;
@@ -26,9 +26,14 @@ public class Bebida extends ItemCardapio {
     }
 
     @Override
+    public String aceitar(VisitorItemCardapio visitor) {
+        return visitor.visitarBebida(this);
+    }
+
+    @Override
     public String toString() {
         return "Bebida{" +
-                "Descrição:'" + getDescricao() + '\'' +
+                "Descrição'" + getDescricao() + '\'' +
                 ", Preço:" + preco +
                 ", Quantidade de Calorias:" + calorias +
                 '}';

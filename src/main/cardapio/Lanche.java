@@ -14,10 +14,10 @@ public class Lanche extends ItemCardapio {
             throw new IllegalArgumentException("O preço do lanche não pode ser negativo!");
         }
         if (ingredientes == null || ingredientes.isEmpty()) {
-            throw new IllegalArgumentException("O lanche deve ter ao menos um ingrediente!");
+            throw new IllegalArgumentException("A lista de ingredientes do lanche não pode ser nula ou vazia!");
         }
         this.preco = preco;
-        this.ingredientes = new ArrayList<>(ingredientes);
+        this.ingredientes = new ArrayList<Ingrediente>(ingredientes);
     }
 
     public Lanche(ReceitaLanche receita) {
@@ -26,13 +26,13 @@ public class Lanche extends ItemCardapio {
 
     private static String extrairNome(ReceitaLanche receita) {
         if (receita == null) {
-            throw new IllegalArgumentException("O nome da receita não pode ser nulo!");
+            throw new IllegalArgumentException("A receita fornecida não é válida!");
         }
         return receita.getNome();
     }
 
     public List<Ingrediente> getIngredientes() {
-        return new ArrayList<>(this.ingredientes);
+        return new ArrayList<Ingrediente>(this.ingredientes);
     }
 
     public float getPreco() {
@@ -45,6 +45,11 @@ public class Lanche extends ItemCardapio {
             total += ingrediente.getCalorias();
         }
         return total;
+    }
+
+    @Override
+    public String aceitar(VisitorItemCardapio visitor) {
+        return visitor.visitarLanche(this);
     }
 
     @Override

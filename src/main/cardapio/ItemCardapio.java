@@ -34,4 +34,6 @@ public abstract class ItemCardapio {
     public abstract float getPreco();
 
     public abstract int getCalorias();
+
+    public abstract String aceitar(VisitorItemCardapio visitor);
 }

@@ -7,14 +7,14 @@ public abstract class LancheDecorator extends ItemCardapio {
     public LancheDecorator(ItemCardapio itemDecorado) {
         super(extrairDescricao(itemDecorado));
         if (!(itemDecorado instanceof Lanche) && !(itemDecorado instanceof LancheDecorator)) {
-            throw new IllegalArgumentException("Somente lanches podem receber adicionais!");
+            throw new IllegalArgumentException("Somente lanches podem receber itens adicionais!");
         }
         this.itemDecorado = itemDecorado;
     }
 
     private static String extrairDescricao(ItemCardapio itemDecorado) {
         if (itemDecorado == null) {
-            throw new IllegalArgumentException("O item a ser adicionado não pode ser nulo!");
+            throw new IllegalArgumentException("O item buscado não pode ser nulo!");
         }
         return itemDecorado.getDescricao();
     }
@@ -44,6 +44,12 @@ public abstract class LancheDecorator extends ItemCardapio {
 
     @Override
     public void setDescricao(String descricao) {
-        throw new UnsupportedOperationException("A descrição de um item decorado é derivada automaticamente!");
+        throw new UnsupportedOperationException("A descrição de um item decorado é derivada automaticamente," +
+                " não podendo ser alterada!");
+    }
+
+    @Override
+    public String aceitar(VisitorItemCardapio visitor) {
+        return visitor.visitarLanche(this);
     }
 }
