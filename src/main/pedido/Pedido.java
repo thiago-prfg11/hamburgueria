@@ -1,6 +1,8 @@
 package main.pedido;
 
-public class Pedido {
+import java.util.Observable;
+
+public class Pedido extends Observable {
 
     private final String codigoPedido;
     private EstadoPedido estado;
@@ -15,6 +17,8 @@ public class Pedido {
 
     public void setEstado(EstadoPedido estado) {
         this.estado = estado;
+        setChanged();
+        notifyObservers();
     }
 
     public boolean confirmarPreparo() {
@@ -47,5 +51,13 @@ public class Pedido {
 
     public EstadoPedido getEstado() {
         return estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "Código do Pedido:'" + codigoPedido + '\'' +
+                ", Estado:'" + estado.getDescricaoEstado() + '\'' +
+                '}';
     }
 }
