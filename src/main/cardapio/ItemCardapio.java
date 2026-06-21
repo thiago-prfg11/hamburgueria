@@ -7,7 +7,7 @@ public abstract class ItemCardapio {
 
     public ItemCardapio(String descricao) {
         if (descricao == null || descricao.isBlank()) {
-            throw new IllegalArgumentException("A descrição do item é inválida!");
+            throw new IllegalArgumentException("A descrição do item não pode ser nula ou vazia!");
         }
         this.descricao = descricao;
     }
@@ -18,7 +18,7 @@ public abstract class ItemCardapio {
 
     public void setDescricao(String descricao) {
         if (descricao == null || descricao.isBlank()) {
-            throw new IllegalArgumentException("A descrição do item é inválida!");
+            throw new IllegalArgumentException("A descrição do item não pode ser nula ou vazia!");
         }
         this.descricao = descricao;
     }

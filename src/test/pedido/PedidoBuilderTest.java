@@ -52,7 +52,8 @@ class PedidoBuilderTest {
         CatalogoReceitas catalogo = new CatalogoReceitas();
         List<Ingrediente> ingredientesBase = new ArrayList<>();
         ingredientesBase.add(IngredienteFactory.getIngrediente("Pão Builder Teste", 150, false));
-        catalogo.cadastrarReceita(new ReceitaLanche("X-Builder", ingredientesBase, 22.0f, 15));
+        catalogo.cadastrarReceita(new ReceitaLanche("X-Builder", ingredientesBase, 22.0f,
+                15, TecnicaPreparo.TRADICIONAL));
 
         Lanche lancheBase = new Lanche(catalogo.obterReceita("X-Builder"));
         ItemCardapio lancheComBacon = new AdicionalBacon(lancheBase);
