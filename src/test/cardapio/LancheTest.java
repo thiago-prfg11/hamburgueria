@@ -22,14 +22,22 @@ class LancheTest {
     }
 
     @Test
-    void deveCriarLancheAPartirDeReceitaMantendoMesmaInstanciaDeIngrediente() throws CloneNotSupportedException {
+    void deveCriarLancheAPartirDeReceitaComDescricaoEPrecoCorretos() throws CloneNotSupportedException {
         List<Ingrediente> ingredientes = new ArrayList<>();
-        Ingrediente queijo = IngredienteFactory.getIngrediente("Queijo Cheddar Composite", 90, true);
-        ingredientes.add(queijo);
+        ingredientes.add(IngredienteFactory.getIngrediente("Queijo Cheddar Composite", 90, true));
         ReceitaLanche receita = new ReceitaLanche("X-Cheddar", ingredientes, 19.90f, 10);
         Lanche lanche = new Lanche(receita.clone());
         assertEquals("X-Cheddar", lanche.getDescricao());
         assertEquals(19.90f, lanche.getPreco());
+    }
+
+    @Test
+    void deveManterMesmaInstanciaDeIngredienteAoCriarLancheAPartirDeReceita() throws CloneNotSupportedException {
+        List<Ingrediente> ingredientes = new ArrayList<>();
+        Ingrediente queijo = IngredienteFactory.getIngrediente("Queijo Cheddar Flyweight", 90, true);
+        ingredientes.add(queijo);
+        ReceitaLanche receita = new ReceitaLanche("X-Cheddar Flyweight", ingredientes, 19.90f, 10);
+        Lanche lanche = new Lanche(receita.clone());
         assertSame(queijo, lanche.getIngredientes().get(0));
     }
 
