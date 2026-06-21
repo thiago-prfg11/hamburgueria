@@ -1,7 +1,6 @@
 package main.pedido;
 
 import main.cardapio.ItemCardapio;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +10,14 @@ public class PedidoBuilder {
     private String nomeCliente;
     private String enderecoEntrega;
     private String formaPagamento;
-    private final List<ItemCardapio> itens;
+    private List<ItemCardapio> itens;
+    private final List<PedidoSnapshot> historico;
     private EstrategiaFrete estrategiaFrete;
     private float distanciaKm;
 
     public PedidoBuilder() {
         this.itens = new ArrayList<>();
+        this.historico = new ArrayList<>();
     }
 
     public PedidoBuilder setCodigoPedido(String codigoPedido) {
@@ -66,12 +67,26 @@ public class PedidoBuilder {
             throw new IllegalArgumentException("O item inserido não pode ser nulo!");
         }
         this.itens.add(item);
+        this.historico.add(new PedidoSnapshot(this.itens));
         return this;
     }
 
     public PedidoBuilder removerItem(ItemCardapio item) {
         this.itens.remove(item);
+        this.historico.add(new PedidoSnapshot(this.itens));
         return this;
+    }
+
+    public PedidoBuilder restaurarParaIndice(int indice) {
+        if (indice < 0 || indice > this.historico.size() - 1) {
+            throw new IllegalArgumentException("O índice inserido para restauração não é válido!");
+        }
+        this.itens = new ArrayList<>(this.historico.get(indice).getItens());
+        return this;
+    }
+
+    public List<PedidoSnapshot> getHistorico() {
+        return new ArrayList<>(this.historico);
     }
 
     public List<ItemCardapio> getItensAtuais() {
