@@ -58,4 +58,15 @@ class IngredienteFactoryTest {
         int totalDepois = IngredienteFactory.getTotalIngredientes();
         assertEquals(totalAntes + 2, totalDepois);
     }
+
+    @Test
+    void deveRetornarIngredienteCadastradoAoBuscarPorNome() {
+        Ingrediente ingrediente = IngredienteFactory.getIngrediente("Picles Busca", 4, false);
+        assertSame(ingrediente, IngredienteFactory.buscarPorNome("Picles Busca"));
+    }
+
+    @Test
+    void deveRetornarNuloParaIngredienteNaoCadastradoAoBuscarPorNome() {
+        assertNull(IngredienteFactory.buscarPorNome("Ingrediente Nunca Cadastrado"));
+    }
 }

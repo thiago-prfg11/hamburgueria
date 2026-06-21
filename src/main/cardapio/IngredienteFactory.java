@@ -22,6 +22,10 @@ public class IngredienteFactory {
         return ingrediente;
     }
 
+    public static Ingrediente buscarPorNome(String nome) {
+        return ingredientes.get(nome);
+    }
+
     public static int getTotalIngredientes() {
         return ingredientes.size();
     }
