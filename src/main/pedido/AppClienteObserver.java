@@ -1,9 +1,8 @@
 package main.pedido;
 
-import java.util.Observable;
-import java.util.Observer;
+import main.atendimento.IObserver;
 
-public class AppClienteObserver implements Observer {
+public class AppClienteObserver implements IObserver {
 
     private final String nomeCliente;
     private String ultimaNotificacao;
@@ -15,17 +14,12 @@ public class AppClienteObserver implements Observer {
         this.nomeCliente = nomeCliente;
     }
 
+    public void notificar(Pedido pedido) {
+        this.ultimaNotificacao = "Atenção, " + this.nomeCliente + ", seu pedido " + pedido.getCodigoPedido() +
+                " se encontra no seguinte estado: " + pedido.getDescricaoEstado();
+    }
+
     public String getUltimaNotificacao() {
         return ultimaNotificacao;
-    }
-
-    public void acompanhar(Pedido pedido) {
-        pedido.addObserver(this);
-    }
-
-    public void update(Observable observable, Object arg) {
-        Pedido pedido = (Pedido) observable;
-        this.ultimaNotificacao = "Olá, " + this.nomeCliente + "! Seu pedido " + pedido.getCodigoPedido() +
-                " se encontra no seguinte estado: " + pedido.getDescricaoEstado();
     }
 }

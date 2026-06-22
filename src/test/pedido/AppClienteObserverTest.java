@@ -1,54 +1,107 @@
 package test.pedido;
 
+import main.atendimento.CentralAtendimento;
 import main.pedido.AppClienteObserver;
 import main.pedido.Pedido;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppClienteObserverTest {
 
+    @BeforeEach
+    void setUp() {
+        CentralAtendimento.getInstance().limpar();
+    }
+
     @Test
-    void deveNotificarUmCliente() {
-        Pedido pedido = new Pedido("PED-100");
+    void deveNotificarClienteQuandoPedidoMudaParaEmPreparo() {
+        Pedido pedido = new Pedido("PED-OBS-001");
         AppClienteObserver cliente = new AppClienteObserver("Maria");
-        cliente.acompanhar(pedido);
+        CentralAtendimento.getInstance().acompanharPedido(pedido, cliente);
+
         pedido.confirmarPreparo();
-        assertEquals("Olá, Maria! Seu pedido PED-100 se encontra no seguinte estado: Em Preparo",
+
+        assertEquals("Atenção, Maria, seu pedido PED-OBS-001 se encontra no seguinte estado: Em Preparo",
                 cliente.getUltimaNotificacao());
     }
 
     @Test
-    void deveNotificarVariosClientes() {
-        Pedido pedido = new Pedido("PED-200");
-        AppClienteObserver cliente1 = new AppClienteObserver("Maria");
-        AppClienteObserver cliente2 = new AppClienteObserver("João");
-        cliente1.acompanhar(pedido);
-        cliente2.acompanhar(pedido);
+    void deveNotificarClienteQuandoPedidoMudaParaPronto() {
+        Pedido pedido = new Pedido("PED-OBS-002");
+        AppClienteObserver cliente = new AppClienteObserver("João");
+        CentralAtendimento.getInstance().acompanharPedido(pedido, cliente);
         pedido.confirmarPreparo();
-        assertEquals("Olá, Maria! Seu pedido PED-200 se encontra no seguinte estado: Em Preparo",
-                cliente1.getUltimaNotificacao());
-        assertEquals("Olá, João! Seu pedido PED-200 se encontra no seguinte estado: Em Preparo",
-                cliente2.getUltimaNotificacao());
+
+        pedido.finalizarPreparo();
+
+        assertEquals("Atenção, João, seu pedido PED-OBS-002 se encontra no seguinte estado: Pronto",
+                cliente.getUltimaNotificacao());
+    }
+
+    @Test
+    void deveNotificarClienteQuandoPedidoMudaParaSaiuParaEntrega() {
+        Pedido pedido = new Pedido("PED-OBS-003");
+        AppClienteObserver cliente = new AppClienteObserver("Ana");
+        CentralAtendimento.getInstance().acompanharPedido(pedido, cliente);
+        pedido.confirmarPreparo();
+        pedido.finalizarPreparo();
+
+        pedido.despachar();
+
+        assertEquals("Atenção, Ana, seu pedido PED-OBS-003 se encontra no seguinte estado: Saiu para Entrega",
+                cliente.getUltimaNotificacao());
+    }
+
+    @Test
+    void deveNotificarClienteQuandoPedidoMudaParaEntregue() {
+        Pedido pedido = new Pedido("PED-OBS-004");
+        AppClienteObserver cliente = new AppClienteObserver("Carlos");
+        CentralAtendimento.getInstance().acompanharPedido(pedido, cliente);
+        pedido.confirmarPreparo();
+        pedido.finalizarPreparo();
+        pedido.despachar();
+
+        pedido.entregar();
+
+        assertEquals("Atenção, Carlos, seu pedido PED-OBS-004 se encontra no seguinte estado: Entregue",
+                cliente.getUltimaNotificacao());
+    }
+
+    @Test
+    void deveNotificarClienteQuandoPedidoMudaParaCancelado() {
+        Pedido pedido = new Pedido("PED-OBS-005");
+        AppClienteObserver cliente = new AppClienteObserver("Beatriz");
+        CentralAtendimento.getInstance().acompanharPedido(pedido, cliente);
+
+        pedido.cancelar();
+
+        assertEquals("Atenção, Beatriz, seu pedido PED-OBS-005 se encontra no seguinte estado: Cancelado",
+                cliente.getUltimaNotificacao());
     }
 
     @Test
     void naoDeveNotificarClienteNaoAcompanhando() {
-        Pedido pedido = new Pedido("PED-300");
+        Pedido pedido = new Pedido("PED-OBS-006");
         AppClienteObserver cliente = new AppClienteObserver("Maria");
+
         pedido.confirmarPreparo();
+
         assertNull(cliente.getUltimaNotificacao());
     }
 
     @Test
     void naoDeveNotificarClienteDeOutroPedido() {
-        Pedido pedidoA = new Pedido("PED-400");
-        Pedido pedidoB = new Pedido("PED-401");
+        Pedido pedidoA = new Pedido("PED-OBS-007");
+        Pedido pedidoB = new Pedido("PED-OBS-008");
         AppClienteObserver cliente1 = new AppClienteObserver("Maria");
         AppClienteObserver cliente2 = new AppClienteObserver("João");
-        cliente1.acompanhar(pedidoA);
-        cliente2.acompanhar(pedidoB);
+        CentralAtendimento.getInstance().acompanharPedido(pedidoA, cliente1);
+        CentralAtendimento.getInstance().acompanharPedido(pedidoB, cliente2);
+
         pedidoA.confirmarPreparo();
-        assertEquals("Olá, Maria! Seu pedido PED-400 se encontra no seguinte estado: Em Preparo",
+
+        assertEquals("Atenção, Maria, seu pedido PED-OBS-007 se encontra no seguinte estado: Em Preparo",
                 cliente1.getUltimaNotificacao());
         assertNull(cliente2.getUltimaNotificacao());
     }
