@@ -36,7 +36,7 @@ class BebidaTest {
         try {
             new Bebida("   ", 4.0f, 100);
         } catch (IllegalArgumentException e) {
-            assertEquals("A descrição do item é inválida!", e.getMessage());
+            assertEquals("A descrição do item não pode ser nula ou vazia!", e.getMessage());
         }
     }
 }

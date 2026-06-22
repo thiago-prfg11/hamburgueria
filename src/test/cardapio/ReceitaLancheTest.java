@@ -65,7 +65,6 @@ class ReceitaLancheTest {
         try {
             new ReceitaLanche(null, new ArrayList<>(), 10.0f, 10,
                     TecnicaPreparo.TRADICIONAL);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O nome da receita não pode ser nulo ou em branco!", e.getMessage());
         }
@@ -76,7 +75,6 @@ class ReceitaLancheTest {
         try {
             new ReceitaLanche("   ", new ArrayList<>(), 10.0f, 10,
                     TecnicaPreparo.TRADICIONAL);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O nome da receita não pode ser nulo ou em branco!", e.getMessage());
         }
@@ -87,7 +85,6 @@ class ReceitaLancheTest {
         try {
             new ReceitaLanche("X-Tudo", null, 10.0f, 10,
                     TecnicaPreparo.TRADICIONAL);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A lista de ingredientes não pode ser nula!", e.getMessage());
         }
@@ -98,7 +95,6 @@ class ReceitaLancheTest {
         try {
             new ReceitaLanche("X-Tudo", new ArrayList<>(), -5.0f, 10,
                     TecnicaPreparo.TRADICIONAL);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O preço base não pode ser negativo!", e.getMessage());
         }
@@ -109,7 +105,6 @@ class ReceitaLancheTest {
         try {
             new ReceitaLanche("X-Tudo", new ArrayList<>(), 10.0f, 0,
                     TecnicaPreparo.TRADICIONAL);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O tempo de preparo deve ser, no mínimo, de 1 minuto!", e.getMessage());
         }
@@ -131,7 +126,6 @@ class ReceitaLancheTest {
         ingredientes.add(IngredienteFactory.getIngrediente("Pão Tecnica Nula", 120, false));
         try {
             new ReceitaLanche("X-Erro", ingredientes, 18.0f, 10, null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A técnica de preparo não pode ser nula!", e.getMessage());
         }

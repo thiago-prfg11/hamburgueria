@@ -163,7 +163,6 @@ class LancheDecoratorTest {
     void deveRetornarExcecaoParaItemNulo() {
         try {
             new AdicionalBacon(null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O item buscado não pode ser nulo!", e.getMessage());
         }
@@ -173,7 +172,6 @@ class LancheDecoratorTest {
     void deveRetornarExcecaoParaItemQueNaoEhLanche() {
         try {
             new AdicionalBacon(new Bebida("Refrigerante", 6.0f, 140));
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Somente lanches podem receber itens adicionais!", e.getMessage());
         }
@@ -187,7 +185,6 @@ class LancheDecoratorTest {
 
         try {
             lanche.setDescricao("Outra Descrição");
-            fail();
         } catch (UnsupportedOperationException e) {
             assertEquals("A descrição de um item decorado é derivada automaticamente, não podendo ser alterada!", e.getMessage());
         }

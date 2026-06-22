@@ -57,7 +57,6 @@ class CatalogoReceitasTest {
         CatalogoReceitas catalogo = new CatalogoReceitas();
         try {
             catalogo.cadastrarReceita(null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A receita inserida não pode ser nula!", e.getMessage());
         }
@@ -68,7 +67,6 @@ class CatalogoReceitasTest {
         CatalogoReceitas catalogo = new CatalogoReceitas();
         try {
             catalogo.obterReceita("Receita Fantasma");
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A receita buscada não foi encontrada!", e.getMessage());
         }

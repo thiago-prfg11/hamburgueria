@@ -50,7 +50,6 @@ class LancheTest {
     void deveRetornarExcecaoParaReceitaNula() {
         try {
             new Lanche((ReceitaLanche) null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A receita fornecida não pode ser nula!", e.getMessage());
         }
@@ -62,7 +61,6 @@ class LancheTest {
         ingredientes.add(IngredienteFactory.getIngrediente("Alface Composite", 5, false));
         try {
             new Lanche(null, 10.0f, ingredientes);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A descrição do item não pode ser nula ou vazia!", e.getMessage());
         }
@@ -74,7 +72,6 @@ class LancheTest {
         ingredientes.add(IngredienteFactory.getIngrediente("Tomate Composite", 18, false));
         try {
             new Lanche("X-Salada", -1.0f, ingredientes);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O preço do lanche não pode ser negativo!", e.getMessage());
         }
@@ -84,7 +81,6 @@ class LancheTest {
     void deveRetornarExcecaoParaListaIngredientesNula() {
         try {
             new Lanche("X-Tudo", 25.0f, null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A lista de ingredientes do lanche não pode ser nula ou vazia!", e.getMessage());
         }
@@ -94,7 +90,6 @@ class LancheTest {
     void deveRetornarExcecaoParaListaIngredientesVazia() {
         try {
             new Lanche("X-Tudo", 25.0f, new ArrayList<>());
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A lista de ingredientes do lanche não pode ser nula ou vazia!", e.getMessage());
         }

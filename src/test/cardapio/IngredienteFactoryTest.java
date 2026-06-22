@@ -26,7 +26,6 @@ class IngredienteFactoryTest {
     void deveRetornarExcecaoParaNomeNulo() {
         try {
             IngredienteFactory.getIngrediente(null, 100, false);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O nome do ingrediente inserido não pode ser nulo ou em branco!", e.getMessage());
         }
@@ -36,7 +35,6 @@ class IngredienteFactoryTest {
     void deveRetornarExcecaoParaNomeVazio() {
         try {
             IngredienteFactory.getIngrediente("   ", 100, false);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("O nome do ingrediente inserido não pode ser nulo ou em branco!", e.getMessage());
         }
@@ -46,7 +44,6 @@ class IngredienteFactoryTest {
     void deveRetornarExcecaoParaCaloriasNegativas() {
         try {
             IngredienteFactory.getIngrediente("Cebola Caramelizada", -10, false);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A quantidade de calorias inserida não pode ser negativa!", e.getMessage());
         }

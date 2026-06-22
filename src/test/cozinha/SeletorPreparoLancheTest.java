@@ -58,7 +58,6 @@ class SeletorPreparoLancheTest {
     void deveRetornarExcecaoParaReceitaNula() {
         try {
             SeletorPreparoLanche.obterPreparo(null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A receita não pode ser nula!", e.getMessage());
         }

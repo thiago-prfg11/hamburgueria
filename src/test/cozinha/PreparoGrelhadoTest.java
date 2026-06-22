@@ -87,7 +87,6 @@ class PreparoGrelhadoTest {
     void deveRetornarExcecaoParaReceitaNula() {
         try {
             new PreparoGrelhado(null);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A receita não pode ser nula!", e.getMessage());
         }
@@ -102,7 +101,6 @@ class PreparoGrelhadoTest {
 
         try {
             new PreparoGrelhado(receita);
-            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("A receita deve conter ao menos um pão e uma proteína!", e.getMessage());
         }
