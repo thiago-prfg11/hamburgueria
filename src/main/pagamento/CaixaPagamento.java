@@ -6,12 +6,13 @@ public class CaixaPagamento {
 
     public CaixaPagamento(IProcessadorPagamento processadorPagamento) {
         if (processadorPagamento == null) {
-            throw new IllegalArgumentException("O processador de pagamento referenciado é inválido!");
+            throw new IllegalArgumentException("O processador de pagamento referenciado não pode ser nulo!");
         }
         this.processadorPagamento = processadorPagamento;
     }
 
-    public StatusPagamento processarPagamento(int valorTransacao) {
-        return this.processadorPagamento.processar(valorTransacao);
+    public StatusPagamento processarPagamento(float valorReais) {
+        int valorCentavos = Math.round(valorReais * 100);
+        return this.processadorPagamento.processar(valorCentavos);
     }
 }

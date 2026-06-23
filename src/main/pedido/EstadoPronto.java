@@ -21,4 +21,9 @@ public class EstadoPronto extends EstadoPedido {
         pedido.setEstado(EstadoEntregue.getInstance());
         return true;
     }
+
+    public boolean cancelar(Pedido pedido) {
+        pedido.setEstado(EstadoCancelado.getInstance());
+        return true;
+    }
 }

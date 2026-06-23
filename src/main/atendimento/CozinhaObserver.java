@@ -28,6 +28,10 @@ public class CozinhaObserver implements IObserver {
         if (estado.equals("Em Preparo")) {
             this.painelCozinha.receberPedido(pedido);
             this.pedidosEmPreparo.add(pedido.getCodigoPedido());
+            int quantidade = this.painelCozinha.getFilaEspera().size();
+            for (int i = 0; i < quantidade; i++) {
+                this.painelCozinha.executarProximaTarefa();
+            }
             return;
         }
         if (estado.equals("Cancelado") && this.pedidosEmPreparo.contains(pedido.getCodigoPedido())) {

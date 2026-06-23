@@ -12,7 +12,7 @@ class CaixaPagamentoTest {
             new CaixaPagamento(null);
 
         } catch (IllegalArgumentException e) {
-            assertEquals("O processador de pagamento referenciado é inválido!", e.getMessage());
+            assertEquals("O processador de pagamento referenciado não pode ser nulo!", e.getMessage());
         }
     }
 }

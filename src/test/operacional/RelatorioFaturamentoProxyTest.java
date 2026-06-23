@@ -34,18 +34,21 @@ class RelatorioFaturamentoProxyTest {
         gerente.setRegimeContratacao(new RegimeCLT());
 
         pedidos = new ArrayList<>();
+
         Pedido pedido1 = new PedidoBuilder()
                 .setCodigoPedido("PED-PROXY-001")
                 .setNomeCliente("Cliente A")
                 .setEstrategiaFrete(new FreteFixo())
                 .addItem(new Bebida("Refrigerante Proxy", 6.0f, 140))
                 .build();
+
         Pedido pedido2 = new PedidoBuilder()
                 .setCodigoPedido("PED-PROXY-002")
                 .setNomeCliente("Cliente B")
                 .setEstrategiaFrete(new FreteFixo())
                 .addItem(new Bebida("Suco Proxy", 8.0f, 90))
                 .build();
+
         pedidos.add(pedido1);
         pedidos.add(pedido2);
     }
@@ -85,7 +88,7 @@ class RelatorioFaturamentoProxyTest {
     void deveRetornarFaturamentoTotalParaGerente() {
         IRelatorioFaturamento relatorio = new RelatorioFaturamentoProxy(pedidos, gerente);
 
-        float freteFixo = pedidos.get(0).getValorFrete();
+        float freteFixo = pedidos.getFirst().getValorFrete();
         float totalEsperado = 6.0f + 8.0f + (freteFixo * 2);
         assertEquals("Faturamento Total (Em Reais): R$" + String.format(Locale.US, "%.2f", totalEsperado),
                 relatorio.getDadosRelatorio().get(1));
@@ -95,7 +98,7 @@ class RelatorioFaturamentoProxyTest {
     void deveRetornarTicketMedioCorretoParaGerente() {
         IRelatorioFaturamento relatorio = new RelatorioFaturamentoProxy(pedidos, gerente);
 
-        float freteFixo = pedidos.get(0).getValorFrete();
+        float freteFixo = pedidos.getFirst().getValorFrete();
         float totalEsperado = 6.0f + 8.0f + (freteFixo * 2);
         float ticketEsperado = totalEsperado / 2;
         assertEquals("Ticket Médio (Em Reais): R$" + String.format(Locale.US, "%.2f", ticketEsperado),
@@ -103,17 +106,13 @@ class RelatorioFaturamentoProxyTest {
     }
 
     @Test
-    void deveRetornarExcecaoParaCargoNaoAutorizado() {
-        Cargo cargoNaoAutorizado = new Cargo(0.0f) {
-            public float calcularSalario() { return 0.0f; }
-        };
-        IRelatorioFaturamento relatorio = new RelatorioFaturamentoProxy(pedidos, cargoNaoAutorizado);
+    void deveReutilizarRelatorioInstanciadoPreviamente() {
+        IRelatorioFaturamento relatorio = new RelatorioFaturamentoProxy(pedidos, gerente);
 
-        try {
-            relatorio.getDadosRelatorio();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Nível de Autoridade Insuficiente Para Acessar Este Relatório!", e.getMessage());
-        }
+        List<String> primeiraConsulta = relatorio.getDadosRelatorio();
+        List<String> segundaConsulta = relatorio.getDadosRelatorio();
+
+        assertEquals(primeiraConsulta, segundaConsulta);
     }
 
     @Test

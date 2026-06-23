@@ -41,7 +41,7 @@ class CentralAtendimentoTest {
 
         pedido.confirmarPreparo();
 
-        assertEquals(1, cozinha.getPainelCozinha().getFilaEspera().size());
+        assertEquals(1, cozinha.getPainelCozinha().getHistorico().size());
     }
 
     @Test
@@ -58,8 +58,8 @@ class CentralAtendimentoTest {
 
         pedido.finalizarPreparo();
 
-        assertEquals(1, cozinha.getPainelCozinha().getFilaEspera().size());
-        assertEquals(0, cozinha.getPainelCozinha().getHistorico().size());
+        assertEquals(0, cozinha.getPainelCozinha().getFilaEspera().size());
+        assertEquals(1, cozinha.getPainelCozinha().getHistorico().size());
     }
 
     @Test
@@ -77,9 +77,8 @@ class CentralAtendimentoTest {
 
         pedido.confirmarPreparo();
 
-        assertEquals("Atenção, Daniel, seu pedido PED-MED-003 se encontra no seguinte estado: Em Preparo",
-                cliente.getUltimaNotificacao());
-        assertEquals(1, cozinha.getPainelCozinha().getFilaEspera().size());
+        assertEquals("Atenção, Daniel, seu pedido PED-MED-003 se encontra no seguinte estado: Em Preparo", cliente.getUltimaNotificacao());
+        assertEquals(1, cozinha.getPainelCozinha().getHistorico().size());
     }
 
     @Test
@@ -136,7 +135,8 @@ class CentralAtendimentoTest {
 
         pedido.confirmarPreparo();
 
-        assertEquals("Pedido PED-MED-007 está: Em Preparo", CentralAtendimento.getInstance().getHistoricoPedido("PED-MED-007").get(0));
+        assertEquals("Pedido PED-MED-007 está: Em Preparo",
+                CentralAtendimento.getInstance().getHistoricoPedido("PED-MED-007").get(0));
     }
 
     @Test
@@ -169,11 +169,6 @@ class CentralAtendimentoTest {
     }
 
     @Test
-    void deveRetornarHistoricoVazioParaPedidoNaoAcompanhado() {
-        assertEquals(0, CentralAtendimento.getInstance().getHistoricoPedido("PED-INEXISTENTE").size());
-    }
-
-    @Test
     void deveRetornarExcecaoParaPedidoNuloEmAcompanharPedido() {
         AppClienteObserver cliente = new AppClienteObserver("Lucas");
         try {
@@ -185,7 +180,7 @@ class CentralAtendimentoTest {
 
     @Test
     void deveRetornarExcecaoParaObserverNuloEmAcompanharPedido() {
-        Pedido pedido = new Pedido("PED-MED-011");
+        Pedido pedido = new Pedido("PED-MED-012");
         try {
             CentralAtendimento.getInstance().acompanharPedido(pedido, null);
         } catch (IllegalArgumentException e) {

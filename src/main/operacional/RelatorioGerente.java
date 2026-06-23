@@ -1,19 +1,15 @@
 package main.operacional;
 
 import main.pedido.Pedido;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class RelatorioGerente implements IRelatorioFaturamento {
 
-    private final List<Pedido> pedidos;
+    private List<Pedido> pedidos;
 
     public RelatorioGerente(List<Pedido> pedidos) {
-        if (pedidos == null) {
-            throw new IllegalArgumentException("A lista de pedidos referenciada não pode ser nula!");
-        }
         this.pedidos = pedidos;
     }
 

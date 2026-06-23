@@ -135,9 +135,9 @@ class PedidoTest {
     }
 
     @Test
-    void naoDeveCancelarPedidoPronto() {
+    void DeveCancelarPedidoPronto() {
         pedido.setEstado(EstadoPronto.getInstance());
-        assertFalse(pedido.cancelar());
+        assertTrue(pedido.cancelar());
     }
 
     // Testes Para Pedido [SAIU PARA ENTREGA]
