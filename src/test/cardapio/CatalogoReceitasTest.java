@@ -1,6 +1,7 @@
 package test.cardapio;
 
 import main.cardapio.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +9,34 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CatalogoReceitasTest {
 
+    @BeforeEach
+    void setUp() {
+        IngredienteFactory.limpar();
+    }
+
     @Test
-    void deveCadastrarEObterReceita() {
+    void deveCadastrarEObterReceitaPeloNome() {
         CatalogoReceitas catalogo = new CatalogoReceitas();
         List<Ingrediente> ingredientes = new ArrayList<>();
-        ingredientes.add(IngredienteFactory.getIngrediente("Queijo Coalho", 90, true));
+        ingredientes.add(IngredienteFactory.getIngrediente("Tirolez – Queijo Coalho", 90, true));
         catalogo.cadastrarReceita(new ReceitaLanche("X-Coalho", ingredientes, 17.90f,
                 11, TecnicaPreparo.TRADICIONAL));
 
         ReceitaLanche receita = catalogo.obterReceita("X-Coalho");
 
         assertEquals("X-Coalho", receita.getNome());
+    }
+
+    @Test
+    void deveCadastrarEObterReceitaComIngredientesCorretos() {
+        CatalogoReceitas catalogo = new CatalogoReceitas();
+        List<Ingrediente> ingredientes = new ArrayList<>();
+        ingredientes.add(IngredienteFactory.getIngrediente("Tirolez – Queijo Coalho", 90, true));
+        catalogo.cadastrarReceita(new ReceitaLanche("X-Coalho", ingredientes, 17.90f,
+                11, TecnicaPreparo.TRADICIONAL));
+
+        ReceitaLanche receita = catalogo.obterReceita("X-Coalho");
+
         assertEquals(1, receita.getIngredientesBase().size());
     }
 
@@ -26,12 +44,12 @@ class CatalogoReceitasTest {
     void deveRetornarCloneDiferenteACadaChamada() {
         CatalogoReceitas catalogo = new CatalogoReceitas();
         List<Ingrediente> ingredientes = new ArrayList<>();
-        ingredientes.add(IngredienteFactory.getIngrediente("Molho Especial da Casa", 40, false));
-        catalogo.cadastrarReceita(new ReceitaLanche("X-Especial", ingredientes, 19.90f,
+        ingredientes.add(IngredienteFactory.getIngrediente("Tirolez – Queijo Parmesão Ralado", 40, false));
+        catalogo.cadastrarReceita(new ReceitaLanche("X-Parmesão", ingredientes, 19.90f,
                 13, TecnicaPreparo.TRADICIONAL));
 
-        ReceitaLanche receita1 = catalogo.obterReceita("X-Especial");
-        ReceitaLanche receita2 = catalogo.obterReceita("X-Especial");
+        ReceitaLanche receita1 = catalogo.obterReceita("X-Parmesão");
+        ReceitaLanche receita2 = catalogo.obterReceita("X-Parmesão");
 
         assertNotSame(receita1, receita2);
     }
@@ -55,20 +73,16 @@ class CatalogoReceitasTest {
     @Test
     void deveRetornarExcecaoParaCadastrarReceitaNula() {
         CatalogoReceitas catalogo = new CatalogoReceitas();
-        try {
-            catalogo.cadastrarReceita(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A receita inserida não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> catalogo.cadastrarReceita(null));
+        assertEquals("ERR01 - A receita referenciada não pode ser nula!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaObterReceitaInexistente() {
         CatalogoReceitas catalogo = new CatalogoReceitas();
-        try {
-            catalogo.obterReceita("Receita Fantasma");
-        } catch (IllegalArgumentException e) {
-            assertEquals("A receita buscada não foi encontrada!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> catalogo.obterReceita("Receita Fantasma"));
+        assertEquals("ERR06 - A receita buscada não existe no sistema!", e.getMessage());
     }
 }

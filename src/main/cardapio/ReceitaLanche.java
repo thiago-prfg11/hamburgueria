@@ -11,24 +11,25 @@ public class ReceitaLanche implements Cloneable {
     private int tempoPreparoMinutos;
     private final TecnicaPreparo tecnicaPreparo;
 
-    public ReceitaLanche(String nome, List<Ingrediente> ingredientesBase, float precoBase, int tempoPreparoMinutos, TecnicaPreparo tecnicaPreparo) {
+    public ReceitaLanche(String nome, List<Ingrediente> ingredientesBase, float precoBase, int tempoPreparoMinutos,
+                         TecnicaPreparo tecnicaPreparo) {
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("O nome da receita não pode ser nulo ou em branco!");
+            throw new IllegalArgumentException("ERR02 - O nome da receita não pode ser nulo ou em branco!");
         }
         if (ingredientesBase == null) {
-            throw new IllegalArgumentException("A lista de ingredientes não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A lista de ingredientes não pode ser nula!");
         }
         if (precoBase < 0) {
-            throw new IllegalArgumentException("O preço base não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O preço base não pode ser negativo!");
         }
         if (tempoPreparoMinutos <= 0) {
-            throw new IllegalArgumentException("O tempo de preparo deve ser, no mínimo, de 1 minuto!");
+            throw new IllegalArgumentException("ERR04 - O tempo de preparo deve ser, no mínimo, de 1 minuto!");
         }
         if (tecnicaPreparo == null) {
-            throw new IllegalArgumentException("A técnica de preparo não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A técnica de preparo não pode ser nula!");
         }
         this.nome = nome;
-        this.ingredientesBase = new ArrayList<Ingrediente>(ingredientesBase);
+        this.ingredientesBase = new ArrayList<>(ingredientesBase);
         this.precoBase = precoBase;
         this.tempoPreparoMinutos = tempoPreparoMinutos;
         this.tecnicaPreparo = tecnicaPreparo;
@@ -40,13 +41,13 @@ public class ReceitaLanche implements Cloneable {
 
     public void setNome(String nome) {
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("O nome da receita não pode ser nulo ou em branco!");
+            throw new IllegalArgumentException("ERR02 - O nome da receita não pode ser nulo ou em branco!");
         }
         this.nome = nome;
     }
 
     public List<Ingrediente> getIngredientesBase() {
-        return new ArrayList<Ingrediente>(this.ingredientesBase);
+        return new ArrayList<>(this.ingredientesBase);
     }
 
     public float getPrecoBase() {
@@ -55,7 +56,7 @@ public class ReceitaLanche implements Cloneable {
 
     public void setPrecoBase(float precoBase) {
         if (precoBase < 0) {
-            throw new IllegalArgumentException("O preço base não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O preço base não pode ser negativo!");
         }
         this.precoBase = precoBase;
     }
@@ -66,7 +67,7 @@ public class ReceitaLanche implements Cloneable {
 
     public void setTempoPreparoMinutos(int tempoPreparoMinutos) {
         if (tempoPreparoMinutos <= 0) {
-            throw new IllegalArgumentException("O tempo de preparo deve ser, no mínimo, de 1 minuto!");
+            throw new IllegalArgumentException("ERR04 - O tempo de preparo deve ser, no mínimo, de 1 minuto!");
         }
         this.tempoPreparoMinutos = tempoPreparoMinutos;
     }
@@ -78,7 +79,7 @@ public class ReceitaLanche implements Cloneable {
     @Override
     public ReceitaLanche clone() throws CloneNotSupportedException {
         ReceitaLanche receitaClone = (ReceitaLanche) super.clone();
-        receitaClone.ingredientesBase = new ArrayList<Ingrediente>(this.ingredientesBase);
+        receitaClone.ingredientesBase = new ArrayList<>(this.ingredientesBase);
         return receitaClone;
     }
 

@@ -7,7 +7,7 @@ public class EmbaladorPedido {
 
     public EmbaladorPedido(FabricaEmbalagem fabrica) {
         if (fabrica == null) {
-            throw new IllegalArgumentException("A fábrica da embalagem inserida não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A fábrica da embalagem referenciada não pode ser nula!");
         }
         this.embalagem = fabrica.createEmbalagem();
         this.itemProtecao = fabrica.createItemProtecao();

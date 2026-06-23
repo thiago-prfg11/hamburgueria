@@ -13,7 +13,7 @@ class ServicoRetiradaTest {
 
     @Test
     void deveAlterarEstadoPedidoParaEntregue() {
-        Pedido pedido = new Pedido("PED-RETIRADA-001");
+        Pedido pedido = new Pedido("PED-001");
         pedido.setEstado(EstadoPronto.getInstance());
         IServicoPedido servico = ServicoPedidoFactory.obterServico("Retirada");
         servico.iniciar(pedido);
@@ -22,19 +22,19 @@ class ServicoRetiradaTest {
 
     @Test
     void deveRetornarDescricaoDeRetiradaComEmbalagemBalcao() {
-        Pedido pedido = new Pedido("PED-RETIRADA-002");
+        Pedido pedido = new Pedido("PED-002");
         pedido.setEstado(EstadoPronto.getInstance());
         IServicoPedido servico = ServicoPedidoFactory.obterServico("Retirada");
 
         String resultado = servico.iniciar(pedido);
 
-        assertEquals("Pedido aguardando retirada no balcão pelo cliente, embalado em Bandeja com Guardanapo", resultado);
+        assertEquals("O pedido está aguardando retirada no balcão pelo cliente, embalado em Bandeja com Guardanapo", resultado);
     }
 
     @Test
     void deveCancelarReservaDeRetirada() {
         IServicoPedido servico = ServicoPedidoFactory.obterServico("Retirada");
 
-        assertEquals("Retirada do pedido pelo cliente cancelada", servico.cancelarDespacho());
+        assertEquals("A retirada do pedido pelo cliente foi cancelada!", servico.cancelarDespacho());
     }
 }

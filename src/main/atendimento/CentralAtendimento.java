@@ -16,8 +16,8 @@ public class CentralAtendimento implements Observer {
     private final Map<String, List<String>> historicoPorPedido;
 
     private CentralAtendimento() {
-        this.observersPorPedido = new HashMap<String, List<IObserver>>();
-        this.historicoPorPedido = new HashMap<String, List<String>>();
+        this.observersPorPedido = new HashMap<>();
+        this.historicoPorPedido = new HashMap<>();
     }
 
     public static CentralAtendimento getInstance() {
@@ -26,28 +26,27 @@ public class CentralAtendimento implements Observer {
 
     public void acompanharPedido(Pedido pedido, IObserver observer) {
         if (pedido == null) {
-            throw new IllegalArgumentException("O pedido referenciado não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O pedido referenciado não pode ser nulo!");
         }
         if (observer == null) {
-            throw new IllegalArgumentException("O observador referenciado não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O observador referenciado não pode ser nulo!");
         }
         pedido.addObserver(this);
         String codigo = pedido.getCodigoPedido();
         if (!this.observersPorPedido.containsKey(codigo)) {
-            this.observersPorPedido.put(codigo, new ArrayList<IObserver>());
+            this.observersPorPedido.put(codigo, new ArrayList<>());
         }
         this.observersPorPedido.get(codigo).add(observer);
     }
 
     public void update(Observable observable, Object arg) {
-        if (!(observable instanceof Pedido)) {
+        if (!(observable instanceof Pedido pedido)) {
             return;
         }
-        Pedido pedido = (Pedido) observable;
         String codigo = pedido.getCodigoPedido();
         String evento = "Pedido " + codigo + " está: " + pedido.getDescricaoEstado();
         if (!this.historicoPorPedido.containsKey(codigo)) {
-            this.historicoPorPedido.put(codigo, new ArrayList<String>());
+            this.historicoPorPedido.put(codigo, new ArrayList<>());
         }
         this.historicoPorPedido.get(codigo).add(evento);
         List<IObserver> observers = this.observersPorPedido.get(codigo);
@@ -60,13 +59,13 @@ public class CentralAtendimento implements Observer {
 
     public List<String> getHistoricoPedido(String codigoPedido) {
         if (codigoPedido == null || codigoPedido.isBlank()) {
-            throw new IllegalArgumentException("O código do pedido referenciado não pode ser nulo ou vazio!");
+            throw new IllegalArgumentException("ERR02 - O código do pedido referenciado não pode ser nulo ou vazio!");
         }
         List<String> historico = this.historicoPorPedido.get(codigoPedido);
         if (historico == null) {
-            return new ArrayList<String>();
+            return new ArrayList<>();
         }
-        return new ArrayList<String>(historico);
+        return new ArrayList<>(historico);
     }
 
     public void limpar() {

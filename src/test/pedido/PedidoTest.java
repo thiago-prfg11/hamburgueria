@@ -11,31 +11,31 @@ class PedidoTest {
 
     @BeforeEach
     void setUp() {
-        pedido = new Pedido("HDT-001");
+        pedido = new Pedido("PED-001");
     }
 
     @Test
-    void deveIniciarComEstadoRecebido() {
+    void deveIniciarComEstadoRecebidoComoInstancia() {
         assertSame(EstadoRecebido.getInstance(), pedido.getEstado());
+    }
+
+    @Test
+    void deveIniciarComDescricaoEstadoRecebido() {
         assertEquals("Recebido", pedido.getDescricaoEstado());
     }
 
     @Test
     void deveRetornarExcecaoParaCodigoPedidoNulo() {
-        try {
-            new Pedido(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O código do pedido não pode ser nulo ou vazio!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new Pedido(null));
+        assertEquals("ERR02 - O código do pedido não pode ser nulo ou vazio!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaCodigoPedidoVazio() {
-        try {
-            new Pedido("   ");
-        } catch (IllegalArgumentException e) {
-            assertEquals("O código do pedido não pode ser nulo ou vazio!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new Pedido("   "));
+        assertEquals("ERR02 - O código do pedido não pode ser nulo ou vazio!", e.getMessage());
     }
 
     // Testes Para Pedido [RECEBIDO]
@@ -44,6 +44,12 @@ class PedidoTest {
     void deveConfirmarPreparoPedidoRecebido() {
         pedido.setEstado(EstadoRecebido.getInstance());
         assertTrue(pedido.confirmarPreparo());
+    }
+
+    @Test
+    void deveAlterarEstadoParaEmPreparoAoConfirmarPreparo() {
+        pedido.setEstado(EstadoRecebido.getInstance());
+        pedido.confirmarPreparo();
         assertEquals(EstadoEmPreparo.getInstance(), pedido.getEstado());
     }
 
@@ -69,6 +75,12 @@ class PedidoTest {
     void deveCancelarPedidoRecebido() {
         pedido.setEstado(EstadoRecebido.getInstance());
         assertTrue(pedido.cancelar());
+    }
+
+    @Test
+    void deveAlterarEstadoParaCanceladoAoCancelarRecebido() {
+        pedido.setEstado(EstadoRecebido.getInstance());
+        pedido.cancelar();
         assertEquals(EstadoCancelado.getInstance(), pedido.getEstado());
     }
 
@@ -84,6 +96,12 @@ class PedidoTest {
     void deveFinalizarPreparoPedidoEmPreparo() {
         pedido.setEstado(EstadoEmPreparo.getInstance());
         assertTrue(pedido.finalizarPreparo());
+    }
+
+    @Test
+    void deveAlterarEstadoParaProntoAoFinalizarPreparo() {
+        pedido.setEstado(EstadoEmPreparo.getInstance());
+        pedido.finalizarPreparo();
         assertEquals(EstadoPronto.getInstance(), pedido.getEstado());
     }
 
@@ -103,6 +121,12 @@ class PedidoTest {
     void deveCancelarPedidoEmPreparo() {
         pedido.setEstado(EstadoEmPreparo.getInstance());
         assertTrue(pedido.cancelar());
+    }
+
+    @Test
+    void deveAlterarEstadoParaCanceladoAoCancelarEmPreparo() {
+        pedido.setEstado(EstadoEmPreparo.getInstance());
+        pedido.cancelar();
         assertEquals(EstadoCancelado.getInstance(), pedido.getEstado());
     }
 
@@ -124,6 +148,12 @@ class PedidoTest {
     void deveDespacharPedidoPronto() {
         pedido.setEstado(EstadoPronto.getInstance());
         assertTrue(pedido.despachar());
+    }
+
+    @Test
+    void deveAlterarEstadoParaSaiuParaEntregaAoDespacharPronto() {
+        pedido.setEstado(EstadoPronto.getInstance());
+        pedido.despachar();
         assertEquals(EstadoSaiuParaEntrega.getInstance(), pedido.getEstado());
     }
 
@@ -131,11 +161,17 @@ class PedidoTest {
     void deveEntregarPedidoPronto() {
         pedido.setEstado(EstadoPronto.getInstance());
         assertTrue(pedido.entregar());
+    }
+
+    @Test
+    void deveAlterarEstadoParaEntregueAoEntregarPronto() {
+        pedido.setEstado(EstadoPronto.getInstance());
+        pedido.entregar();
         assertEquals(EstadoEntregue.getInstance(), pedido.getEstado());
     }
 
     @Test
-    void DeveCancelarPedidoPronto() {
+    void deveCancelarPedidoPronto() {
         pedido.setEstado(EstadoPronto.getInstance());
         assertTrue(pedido.cancelar());
     }
@@ -164,6 +200,12 @@ class PedidoTest {
     void deveEntregarPedidoSaiuParaEntrega() {
         pedido.setEstado(EstadoSaiuParaEntrega.getInstance());
         assertTrue(pedido.entregar());
+    }
+
+    @Test
+    void deveAlterarEstadoParaEntregueAoEntregarSaiuParaEntrega() {
+        pedido.setEstado(EstadoSaiuParaEntrega.getInstance());
+        pedido.entregar();
         assertEquals(EstadoEntregue.getInstance(), pedido.getEstado());
     }
 

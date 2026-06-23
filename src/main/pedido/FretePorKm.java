@@ -6,7 +6,7 @@ public class FretePorKm implements EstrategiaFrete {
 
     public FretePorKm(float valorPorKm) {
         if (valorPorKm < 0) {
-            throw new IllegalArgumentException("O valor do quilômetro rodado não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O valor unitário do quilômetro rodado não pode ser negativo!");
         }
         this.valorPorKm = valorPorKm;
     }

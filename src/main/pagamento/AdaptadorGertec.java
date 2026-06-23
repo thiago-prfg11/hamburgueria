@@ -15,6 +15,3 @@ public class AdaptadorGertec implements IProcessadorPagamento {
         return StatusPagamento.ERRO;
     }
 }
-
-
-

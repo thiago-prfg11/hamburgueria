@@ -6,7 +6,7 @@ public class CaixaPagamento {
 
     public CaixaPagamento(IProcessadorPagamento processadorPagamento) {
         if (processadorPagamento == null) {
-            throw new IllegalArgumentException("O processador de pagamento referenciado não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O processador de pagamento referenciado não pode ser nulo!");
         }
         this.processadorPagamento = processadorPagamento;
     }

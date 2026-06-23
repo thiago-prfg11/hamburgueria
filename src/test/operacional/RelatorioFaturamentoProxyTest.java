@@ -36,17 +36,17 @@ class RelatorioFaturamentoProxyTest {
         pedidos = new ArrayList<>();
 
         Pedido pedido1 = new PedidoBuilder()
-                .setCodigoPedido("PED-PROXY-001")
-                .setNomeCliente("Cliente A")
+                .setCodigoPedido("PED-001")
+                .setNomeCliente("Agostinho Carrara")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Bebida("Refrigerante Proxy", 6.0f, 140))
+                .addItem(new Bebida("Pepsi – Lata 350 ml", 6.0f, 140))
                 .build();
 
         Pedido pedido2 = new PedidoBuilder()
-                .setCodigoPedido("PED-PROXY-002")
-                .setNomeCliente("Cliente B")
+                .setCodigoPedido("PED-002")
+                .setNomeCliente("Paulo Wilson")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Bebida("Suco Proxy", 8.0f, 90))
+                .addItem(new Bebida("Maguary – Suco de Laranja", 8.0f, 90))
                 .build();
 
         pedidos.add(pedido1);
@@ -117,19 +117,15 @@ class RelatorioFaturamentoProxyTest {
 
     @Test
     void deveRetornarExcecaoParaListaDePedidosNula() {
-        try {
-            new RelatorioFaturamentoProxy(null, gerente);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A lista de pedidos referenciada não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new RelatorioFaturamentoProxy(null, gerente));
+        assertEquals("ERR01 - A lista de pedidos referenciada não pode ser nula!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaCargoNulo() {
-        try {
-            new RelatorioFaturamentoProxy(pedidos, null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O cargo referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new RelatorioFaturamentoProxy(pedidos, null));
+        assertEquals("ERR01 - O cargo referenciado não pode ser nulo!", e.getMessage());
     }
 }

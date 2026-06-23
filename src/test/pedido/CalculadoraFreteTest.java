@@ -43,56 +43,44 @@ class CalculadoraFreteTest {
 
     @Test
     void deveRetornarExcecaoParaDistanciaNegativaNoConstrutor() {
-        try {
-            new CalculadoraFrete(-1.0f, 50.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A distância para entrega não pode ser negativa!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new CalculadoraFrete(-1.0f, 50.0f));
+        assertEquals("ERR03 - A distância para entrega não pode ser negativa!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaValorPedidoNegativoNoConstrutor() {
-        try {
-            new CalculadoraFrete(5.0f, -10.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O valor do pedido não pode ser negativo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new CalculadoraFrete(5.0f, -10.0f));
+        assertEquals("ERR03 - O valor do pedido não pode ser negativo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaEstrategiaNula() {
         CalculadoraFrete calculadora = new CalculadoraFrete(5.0f, 50.0f);
-        try {
-            calculadora.calcularFrete(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A estratégia de entrega informada não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> calculadora.calcularFrete(null));
+        assertEquals("ERR01 - A estratégia de entrega informada não pode ser nula!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaValorPorKmNegativo() {
-        try {
-            new FretePorKm(-2.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O valor do quilômetro rodado não pode ser negativo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new FretePorKm(-2.0f));
+        assertEquals("ERR03 - O valor unitário do quilômetro rodado não pode ser negativo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaValorMinimoFreteGratisNegativo() {
-        try {
-            new FreteGratisAcimaDeValor(-50.0f, 10.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O valor mínimo para o frete grátis não pode ser negativo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new FreteGratisAcimaDeValor(-50.0f, 10.0f));
+        assertEquals("ERR03 - O valor mínimo para o frete grátis não pode ser negativo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaValorFretePadraoNegativo() {
-        try {
-            new FreteGratisAcimaDeValor(80.0f, -10.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O valor padrão do frete não pode ser negativo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new FreteGratisAcimaDeValor(80.0f, -10.0f));
+        assertEquals("ERR03 - O valor padrão do frete não pode ser negativo!", e.getMessage());
     }
 }

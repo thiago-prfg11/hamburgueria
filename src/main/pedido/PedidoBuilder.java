@@ -22,7 +22,7 @@ public class PedidoBuilder {
 
     public PedidoBuilder setCodigoPedido(String codigoPedido) {
         if (codigoPedido == null || codigoPedido.isBlank()) {
-            throw new IllegalArgumentException("O código do pedido não pode ser nulo ou vazio!");
+            throw new IllegalArgumentException("ERR02 - O código do pedido não pode ser nulo ou vazio!");
         }
         this.codigoPedido = codigoPedido;
         return this;
@@ -30,7 +30,7 @@ public class PedidoBuilder {
 
     public PedidoBuilder setNomeCliente(String nomeCliente) {
         if (nomeCliente == null || nomeCliente.isBlank()) {
-            throw new IllegalArgumentException("O nome do cliente não pode ser nulo ou vazio!");
+            throw new IllegalArgumentException("ERR02 - O nome do cliente não pode ser nulo ou vazio!");
         }
         this.nomeCliente = nomeCliente;
         return this;
@@ -48,7 +48,7 @@ public class PedidoBuilder {
 
     public PedidoBuilder setEstrategiaFrete(EstrategiaFrete estrategiaFrete) {
         if (estrategiaFrete == null) {
-            throw new IllegalArgumentException("A estratégia de frete não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A estratégia de frete referenciada não pode ser nula!");
         }
         this.estrategiaFrete = estrategiaFrete;
         return this;
@@ -56,7 +56,7 @@ public class PedidoBuilder {
 
     public PedidoBuilder setDistanciaKm(float distanciaKm) {
         if (distanciaKm < 0) {
-            throw new IllegalArgumentException("A distância para entrega não pode ser negativa!");
+            throw new IllegalArgumentException("ERR03 - A distância para entrega não pode ser negativa!");
         }
         this.distanciaKm = distanciaKm;
         return this;
@@ -64,7 +64,7 @@ public class PedidoBuilder {
 
     public PedidoBuilder addItem(ItemCardapio item) {
         if (item == null) {
-            throw new IllegalArgumentException("O item inserido não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O item referenciado não pode ser nulo!");
         }
         this.itens.add(item);
         this.historico.add(new PedidoSnapshot(this.itens));
@@ -79,9 +79,9 @@ public class PedidoBuilder {
 
     public PedidoBuilder restaurarParaIndice(int indice) {
         if (indice < 0 || indice > this.historico.size() - 1) {
-            throw new IllegalArgumentException("O índice inserido para restauração não é válido!");
+            throw new IllegalArgumentException("ERR07 - O índice inserido para restauração não é válido!");
         }
-        this.itens = new ArrayList<>(this.historico.get(indice).getItens());
+        this.itens = new ArrayList<>(this.historico.get(indice).itens());
         return this;
     }
 
@@ -95,16 +95,16 @@ public class PedidoBuilder {
 
     public Pedido build() {
         if (codigoPedido == null) {
-            throw new IllegalArgumentException("O código do pedido não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O código do pedido não pode ser nulo!");
         }
         if (nomeCliente == null) {
-            throw new IllegalArgumentException("O nome do cliente não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O nome do cliente não pode ser nulo!");
         }
         if (itens.isEmpty()) {
-            throw new IllegalArgumentException("O pedido deve ter ao menos um item!");
+            throw new IllegalArgumentException("ERR02 - O pedido deve ter ao menos um item!");
         }
         if (estrategiaFrete == null) {
-            throw new IllegalArgumentException("A estratégia de frete não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A estratégia de frete referenciada não pode ser nula!");
         }
 
         float valorItens = 0;

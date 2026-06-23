@@ -18,9 +18,9 @@ class SeletorPreparoLancheTest {
     @Test
     void deveRetornarPreparoGrelhadoParaTecnicaTradicional() {
         List<Ingrediente> ingredientes = new ArrayList<>();
-        ingredientes.add(IngredienteFactory.getIngrediente("Pão Seletor Tradicional", 120, false));
-        ingredientes.add(IngredienteFactory.getIngrediente("Proteína Seletor Tradicional", 250, false));
-        ReceitaLanche receita = new ReceitaLanche("Lanche Tradicional", ingredientes, 20.0f,
+        ingredientes.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false));
+        ingredientes.add(IngredienteFactory.getIngrediente("Swift – Hambúrguer Angus 180g", 250, false));
+        ReceitaLanche receita = new ReceitaLanche("Tradicional da Casa", ingredientes, 20.0f,
                 10, TecnicaPreparo.TRADICIONAL);
 
         PreparoLanche preparo = SeletorPreparoLanche.obterPreparo(receita);
@@ -31,9 +31,9 @@ class SeletorPreparoLancheTest {
     @Test
     void deveRetornarPreparoGrelhadoParaTecnicaArtesanal() {
         List<Ingrediente> ingredientes = new ArrayList<>();
-        ingredientes.add(IngredienteFactory.getIngrediente("Pão Seletor Artesanal", 150, false));
-        ingredientes.add(IngredienteFactory.getIngrediente("Proteína Seletor Artesanal", 300, false));
-        ReceitaLanche receita = new ReceitaLanche("Lanche Artesanal", ingredientes, 28.0f,
+        ingredientes.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 150, false));
+        ingredientes.add(IngredienteFactory.getIngrediente("Swift – Hambúrguer Angus 180g", 300, false));
+        ReceitaLanche receita = new ReceitaLanche("X-Arte", ingredientes, 28.0f,
                 14, TecnicaPreparo.ARTESANAL);
 
         PreparoLanche preparo = SeletorPreparoLanche.obterPreparo(receita);
@@ -44,9 +44,9 @@ class SeletorPreparoLancheTest {
     @Test
     void deveRetornarPreparoEmpanadoParaTecnicaChicken() {
         List<Ingrediente> ingredientes = new ArrayList<>();
-        ingredientes.add(IngredienteFactory.getIngrediente("Pão Seletor Chicken", 110, false));
-        ingredientes.add(IngredienteFactory.getIngrediente("Proteína Seletor Chicken", 220, false));
-        ReceitaLanche receita = new ReceitaLanche("Lanche Chicken", ingredientes, 22.0f,
+        ingredientes.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 110, false));
+        ingredientes.add(IngredienteFactory.getIngrediente("Seara – Supreme Crispy", 220, false));
+        ReceitaLanche receita = new ReceitaLanche("X-Crispy", ingredientes, 22.0f,
                 12, TecnicaPreparo.CHICKEN);
 
         PreparoLanche preparo = SeletorPreparoLanche.obterPreparo(receita);
@@ -56,10 +56,8 @@ class SeletorPreparoLancheTest {
 
     @Test
     void deveRetornarExcecaoParaReceitaNula() {
-        try {
-            SeletorPreparoLanche.obterPreparo(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A receita não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> SeletorPreparoLanche.obterPreparo(null));
+        assertEquals("ERR01 - A receita referenciada não pode ser nula!", e.getMessage());
     }
 }

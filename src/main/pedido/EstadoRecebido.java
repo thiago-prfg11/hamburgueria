@@ -2,7 +2,7 @@ package main.pedido;
 
 public class EstadoRecebido extends EstadoPedido {
 
-    private EstadoRecebido() {};
+    private EstadoRecebido() {}
     private static final EstadoRecebido instance = new EstadoRecebido();
     public static EstadoRecebido getInstance() {
         return instance;

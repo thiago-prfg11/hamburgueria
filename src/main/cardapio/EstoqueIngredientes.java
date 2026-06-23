@@ -9,7 +9,7 @@ public class EstoqueIngredientes {
 
     public void registrarEntrada(String nome, int calorias, boolean alergenico, int quantidade) {
         if (quantidade <= 0) {
-            throw new IllegalArgumentException("A quantidade inserida para o ingrediente deve ser maior que 0!");
+            throw new IllegalArgumentException("ERR04 - A quantidade inserida para o ingrediente deve ser maior que 0!");
         }
         Ingrediente ingrediente = IngredienteFactory.getIngrediente(nome, calorias, alergenico);
         int quantidadeAtual = quantidades.getOrDefault(ingrediente, 0);
@@ -19,11 +19,12 @@ public class EstoqueIngredientes {
     public void registrarSaida(String nome, int quantidade) {
         Ingrediente ingrediente = buscarPorNome(nome);
         if (ingrediente == null) {
-            throw new IllegalArgumentException("O ingrediente selecionado não foi encontrado no estoque!");
+            throw new IllegalArgumentException("ERR06 - O ingrediente buscado não foi encontrado no estoque!");
         }
         int quantidadeAtual = quantidades.get(ingrediente);
         if (quantidade > quantidadeAtual) {
-            throw new IllegalArgumentException("A quantidade selecionada para baixa é inferior à quantidade em estoque!");
+            throw new IllegalArgumentException("ERR10 - A quantidade selecionada para baixa é inferior" +
+                    " à quantidade em estoque!");
         }
         quantidades.put(ingrediente, quantidadeAtual - quantidade);
     }
@@ -37,11 +38,10 @@ public class EstoqueIngredientes {
     }
 
     private Ingrediente buscarPorNome(String nome) {
-        for (Ingrediente ingrediente : quantidades.keySet()) {
-            if (ingrediente.getNome().equals(nome)) {
-                return ingrediente;
-            }
+        Ingrediente ingrediente = IngredienteFactory.buscarPorNome(nome);
+        if (ingrediente == null || !quantidades.containsKey(ingrediente)) {
+            return null;
         }
-        return null;
+        return ingrediente;
     }
 }

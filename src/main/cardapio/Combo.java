@@ -11,18 +11,19 @@ public class Combo extends ItemCardapio {
     public Combo(String descricao, float descontoPercentual) {
         super(descricao);
         if (descontoPercentual < 0 || descontoPercentual > 100) {
-            throw new IllegalArgumentException("O desconto no valor final do combo deve estar entre 0 e 100!");
+            throw new IllegalArgumentException("ERR04 - O percentual de desconto no valor final do combo deve" +
+                    " ser um valor entre 0 e 100!");
         }
         this.descontoPercentual = descontoPercentual;
-        this.itens = new ArrayList<ItemCardapio>();
+        this.itens = new ArrayList<>();
     }
 
     public void addItem(ItemCardapio item) {
         if (item == null) {
-            throw new IllegalArgumentException("O item a ser adicionado não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O item a ser adicionado não pode ser nulo!");
         }
         if (item == this) {
-            throw new IllegalArgumentException("Um combo não pode conter a si mesmo!");
+            throw new IllegalArgumentException("ERR09 - Um combo não pode conter a si mesmo!");
         }
         this.itens.add(item);
     }
@@ -32,7 +33,7 @@ public class Combo extends ItemCardapio {
     }
 
     public List<ItemCardapio> getItens() {
-        return new ArrayList<ItemCardapio>(this.itens);
+        return new ArrayList<>(this.itens);
     }
 
     public float getDescontoPercentual() {
@@ -41,7 +42,7 @@ public class Combo extends ItemCardapio {
 
     public float getPreco() {
         if (this.itens.isEmpty()) {
-            throw new IllegalStateException("Não é possível calcular o preço de um combo sem itens!");
+            throw new IllegalStateException("ERR02 - Não é possível calcular o preço de um combo sem itens!");
         }
         float total = 0;
         for (ItemCardapio item : this.itens) {

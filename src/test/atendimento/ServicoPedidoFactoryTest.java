@@ -8,19 +8,15 @@ class ServicoPedidoFactoryTest {
 
     @Test
     void deveRetornarExcecaoParaServicoInexistente() {
-        try {
-            ServicoPedidoFactory.obterServico("Teleporte");
-        } catch (IllegalArgumentException e) {
-            assertEquals("O serviço escolhido não existe!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ServicoPedidoFactory.obterServico("Teleporte"));
+        assertEquals("ERR06 - O serviço referenciado não existe no sistema!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaServicoInvalido() {
-        try {
-            ServicoPedidoFactory.obterServico("DriveThru");
-        } catch (IllegalArgumentException e) {
-            assertEquals("O serviço escolhido é inválido!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ServicoPedidoFactory.obterServico("DriveThru"));
+        assertEquals("ERR07 - O serviço referenciado é inválido!", e.getMessage());
     }
 }

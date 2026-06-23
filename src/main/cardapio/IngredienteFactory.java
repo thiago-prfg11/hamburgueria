@@ -9,10 +9,10 @@ public class IngredienteFactory {
 
     public static Ingrediente getIngrediente(String nome, int calorias, boolean alergenico) {
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("O nome do ingrediente inserido não pode ser nulo ou em branco!");
+            throw new IllegalArgumentException("ERR02 - O nome do ingrediente inserido não pode ser nulo ou em branco!");
         }
         if (calorias < 0) {
-            throw new IllegalArgumentException("A quantidade de calorias inserida não pode ser negativa!");
+            throw new IllegalArgumentException("ERR03 - A quantidade de calorias inserida não pode ser negativa!");
         }
         Ingrediente ingrediente = ingredientes.get(nome);
         if (ingrediente == null) {
@@ -28,5 +28,9 @@ public class IngredienteFactory {
 
     public static int getTotalIngredientes() {
         return ingredientes.size();
+    }
+
+    public static void limpar() {
+        ingredientes.clear();
     }
 }

@@ -2,16 +2,17 @@ package main.cardapio;
 
 public class Acompanhamento extends ItemCardapio {
 
-    private float preco;
-    private int calorias;
+    private final float preco;
+    private final int calorias;
 
     public Acompanhamento(String descricao, float preco, int calorias) {
         super(descricao);
         if (preco < 0) {
-            throw new IllegalArgumentException("O preço do acompanhamento não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O preço do acompanhamento não pode ser negativo!");
         }
         if (calorias < 0) {
-            throw new IllegalArgumentException("A quantidade de calorias não pode ser negativa!");
+            throw new IllegalArgumentException("ERR03 - A quantidade de calorias do acompanhamento não" +
+                    " pode ser negativa!");
         }
         this.preco = preco;
         this.calorias = calorias;

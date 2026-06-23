@@ -33,7 +33,7 @@ class ComboTest {
     }
 
     @Test
-    void deveConterOutroComboAninhadoESomarRecursivamente() {
+    void deveConterOutroComboAninhadoESomarPrecoRecursivamente() {
         Combo comboInterno = new Combo("Combo Dupla", 0f);
         comboInterno.addItem(new Bebida("Refrigerante", 6.0f, 140));
         comboInterno.addItem(new Acompanhamento("Batata Média", 10.0f, 400));
@@ -43,6 +43,18 @@ class ComboTest {
         comboExterno.addItem(new Acompanhamento("Sobremesa", 9.0f, 250));
 
         assertEquals(25.0f, comboExterno.getPreco());
+    }
+
+    @Test
+    void deveConterOutroComboAninhadoESomarCaloriasRecursivamente() {
+        Combo comboInterno = new Combo("Combo Dupla", 0f);
+        comboInterno.addItem(new Bebida("Refrigerante", 6.0f, 140));
+        comboInterno.addItem(new Acompanhamento("Batata Média", 10.0f, 400));
+
+        Combo comboExterno = new Combo("Combo Família Completo", 0f);
+        comboExterno.addItem(comboInterno);
+        comboExterno.addItem(new Acompanhamento("Sobremesa", 9.0f, 250));
+
         assertEquals(790, comboExterno.getCalorias());
     }
 
@@ -58,7 +70,7 @@ class ComboTest {
 
     @Test
     void deveRetornarListaDeItensIndependenteDaOriginal() {
-        Combo combo = new Combo("Combo Teste", 0f);
+        Combo combo = new Combo("Combo Kids", 0f);
         combo.addItem(new Bebida("Suco", 7.0f, 100));
         combo.getItens().add(new Acompanhamento("Batata", 9.0f, 300));
         assertEquals(1, combo.getItens().size());
@@ -66,49 +78,39 @@ class ComboTest {
 
     @Test
     void deveRetornarExcecaoParaItemNulo() {
-        Combo combo = new Combo("Combo Teste", 0f);
-        try {
-            combo.addItem(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O item a ser adicionado não pode ser nulo!", e.getMessage());
-        }
+        Combo combo = new Combo("Combo Total", 0f);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> combo.addItem(null));
+        assertEquals("ERR01 - O item a ser adicionado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaComboConterSiMesmo() {
-        Combo combo = new Combo("Combo Recursivo", 0f);
-        try {
-            combo.addItem(combo);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Um combo não pode conter a si mesmo!", e.getMessage());
-        }
+        Combo combo = new Combo("Combo Predilecta", 0f);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> combo.addItem(combo));
+        assertEquals("ERR09 - Um combo não pode conter a si mesmo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaPrecoDeComboSemItens() {
         Combo combo = new Combo("Combo Vazio", 0f);
-        try {
-            combo.getPreco();
-        } catch (IllegalStateException e) {
-            assertEquals("Não é possível calcular o preço de um combo sem itens!", e.getMessage());
-        }
+        IllegalStateException e = assertThrows(IllegalStateException.class,
+                combo::getPreco);
+        assertEquals("ERR02 - Não é possível calcular o preço de um combo sem itens!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaDescontoMenorQueZero() {
-        try {
-            new Combo("Combo Inválido", -5f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O desconto no valor final do combo deve estar entre 0 e 100!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new Combo("Combo Inválido", -5f));
+        assertEquals("ERR04 - O percentual de desconto no valor final do combo deve ser um valor entre 0 e 100!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaDescontoMaiorQueCem() {
-        try {
-            new Combo("Combo Inválido", 150f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O desconto no valor final do combo deve estar entre 0 e 100!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new Combo("Combo Inválido", 150f));
+        assertEquals("ERR04 - O percentual de desconto no valor final do combo deve ser um valor entre 0 e 100!", e.getMessage());
     }
 }

@@ -12,7 +12,7 @@ class ServicoDeliveryTest {
 
     @Test
     void deveAlterarEstadoPedidoParaSaiuParaEntrega() {
-        Pedido pedido = new Pedido("PED-DELIVERY-001");
+        Pedido pedido = new Pedido("PED-001");
         pedido.setEstado(EstadoPronto.getInstance());
         IServicoPedido servico = ServicoPedidoFactory.obterServico("Delivery");
 
@@ -23,13 +23,13 @@ class ServicoDeliveryTest {
 
     @Test
     void deveRetornarDescricaoDeEntregaComEmbalagemDelivery() {
-        Pedido pedido = new Pedido("PED-DELIVERY-002");
+        Pedido pedido = new Pedido("PED-002");
         pedido.setEstado(EstadoPronto.getInstance());
         IServicoPedido servico = ServicoPedidoFactory.obterServico("Delivery");
 
         String resultado = servico.iniciar(pedido);
 
-        assertEquals("Pedido aguardando retirada no balcão pelo entregador," +
+        assertEquals("O pedido está aguardando retirada no balcão pelo entregador," +
                 " embalado em Sacola Térmica com Lacre de Segurança", resultado);
     }
 
@@ -37,6 +37,6 @@ class ServicoDeliveryTest {
     void deveCancelarDespachoDeEntrega() {
         IServicoPedido servico = ServicoPedidoFactory.obterServico("Delivery");
 
-        assertEquals("Retirada do pedido pelo entregador cancelada", servico.cancelarDespacho());
+        assertEquals("A retirada do pedido pelo entregador foi cancelada!", servico.cancelarDespacho());
     }
 }

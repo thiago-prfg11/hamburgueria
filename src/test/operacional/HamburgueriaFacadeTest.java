@@ -12,7 +12,6 @@ import main.pagamento.IProcessadorPagamento;
 import main.pedido.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -34,27 +33,27 @@ class HamburgueriaFacadeTest {
 
         catalogo = new CatalogoReceitas();
         List<Ingrediente> ingredientes = new ArrayList<>();
-        ingredientes.add(IngredienteFactory.getIngrediente("Pao Facade", 120, false));
-        ingredientes.add(IngredienteFactory.getIngrediente("Carne Facade", 280, false));
-        catalogo.cadastrarReceita(new ReceitaLanche("X-Facade", ingredientes, 22.90f,
+        ingredientes.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false));
+        ingredientes.add(IngredienteFactory.getIngrediente("Swift – Hambúrguer Angus 180g", 280, false));
+        catalogo.cadastrarReceita(new ReceitaLanche("Tradicional da Casa", ingredientes, 22.90f,
                 12, TecnicaPreparo.TRADICIONAL));
 
-        cliente = new AppClienteObserver("Cliente Facade");
+        cliente = new AppClienteObserver("Lineu Silva");
         processadorAprovado = new AdaptadorStone();
         processadorRecusado = new AdaptadorGertec();
 
         pedidoComLanche = new PedidoBuilder()
-                .setCodigoPedido("PED-FACADE-001")
-                .setNomeCliente("Cliente Facade")
+                .setCodigoPedido("PED-001")
+                .setNomeCliente("Lineu Silva")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Facade")))
+                .addItem(new Lanche(catalogo.obterReceita("Tradicional da Casa")))
                 .build();
 
         pedidoSomenteComBebida = new PedidoBuilder()
-                .setCodigoPedido("PED-FACADE-002")
-                .setNomeCliente("Cliente Facade")
+                .setCodigoPedido("PED002")
+                .setNomeCliente("Lineu Silva")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Bebida("Refrigerante Facade", 6.0f, 140))
+                .addItem(new Bebida("Guaraná Antarctica – Lata 350 ml", 6.0f, 140))
                 .build();
     }
 
@@ -71,7 +70,7 @@ class HamburgueriaFacadeTest {
         List<String> cupom = HamburgueriaFacade.finalizarPedido(
                 pedidoComLanche, "Delivery", processadorAprovado, catalogo, cliente);
 
-        assertEquals("Pedido: PED-FACADE-001", cupom.get(1));
+        assertEquals("Pedido: PED-001", cupom.get(1));
     }
 
     @Test
@@ -79,7 +78,7 @@ class HamburgueriaFacadeTest {
         List<String> cupom = HamburgueriaFacade.finalizarPedido(
                 pedidoComLanche, "Delivery", processadorAprovado, catalogo, cliente);
 
-        assertEquals("X-Facade ... R$ 22.90", cupom.get(2));
+        assertEquals("Tradicional da Casa ... R$ 22.90", cupom.get(2));
     }
 
     @Test
@@ -105,8 +104,8 @@ class HamburgueriaFacadeTest {
         HamburgueriaFacade.finalizarPedido(
                 pedidoComLanche, "Delivery", processadorAprovado, catalogo, cliente);
 
-        List<String> historico = CentralAtendimento.getInstance().getHistoricoPedido("PED-FACADE-001");
-        assertEquals("Pedido PED-FACADE-001 está: Em Preparo", historico.getFirst());
+        List<String> historico = CentralAtendimento.getInstance().getHistoricoPedido("PED-001");
+        assertEquals("Pedido PED-001 está: Em Preparo", historico.getFirst());
     }
 
     @Test
@@ -114,8 +113,8 @@ class HamburgueriaFacadeTest {
         HamburgueriaFacade.finalizarPedido(
                 pedidoComLanche, "Delivery", processadorAprovado, catalogo, cliente);
 
-        List<String> historico = CentralAtendimento.getInstance().getHistoricoPedido("PED-FACADE-001");
-        assertEquals("Pedido PED-FACADE-001 está: Pronto", historico.get(1));
+        List<String> historico = CentralAtendimento.getInstance().getHistoricoPedido("PED-001");
+        assertEquals("Pedido PED-001 está: Pronto", historico.get(1));
     }
 
     @Test
@@ -123,8 +122,8 @@ class HamburgueriaFacadeTest {
         HamburgueriaFacade.finalizarPedido(
                 pedidoComLanche, "Delivery", processadorAprovado, catalogo, cliente);
 
-        List<String> historico = CentralAtendimento.getInstance().getHistoricoPedido("PED-FACADE-001");
-        assertEquals("Pedido PED-FACADE-001 está: Saiu para Entrega", historico.get(2));
+        List<String> historico = CentralAtendimento.getInstance().getHistoricoPedido("PED-001");
+        assertEquals("Pedido PED-001 está: Saiu para Entrega", historico.get(2));
     }
 
     @Test
@@ -156,7 +155,7 @@ class HamburgueriaFacadeTest {
         HamburgueriaFacade.finalizarPedido(
                 pedidoComLanche, "Delivery", processadorAprovado, catalogo, cliente);
 
-        assertEquals("Atenção, Cliente Facade, seu pedido PED-FACADE-001 se encontra no seguinte estado:" +
+        assertEquals("Atenção, Lineu Silva, seu pedido PED-001 se encontra no seguinte estado:" +
                         " Saiu para Entrega",
                 cliente.getUltimaNotificacao());
     }
@@ -164,16 +163,16 @@ class HamburgueriaFacadeTest {
     @Test
     void deveRetornarCupomNullQuandoPagamentoForRecusado() {
         List<Ingrediente> ingredientesCaros = new ArrayList<>();
-        ingredientesCaros.add(IngredienteFactory.getIngrediente("Pao Gourmet Facade", 150, false));
-        ingredientesCaros.add(IngredienteFactory.getIngrediente("Wagyu Facade", 400, false));
-        catalogo.cadastrarReceita(new ReceitaLanche("X-Wagyu Facade", ingredientesCaros, 200.0f,
-                20, TecnicaPreparo.TRADICIONAL));
+        ingredientesCaros.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 150, false));
+        ingredientesCaros.add(IngredienteFactory.getIngrediente("Sadia – Filé de Peito Empanado Crocante", 400, false));
+        catalogo.cadastrarReceita(new ReceitaLanche("X-Crispy", ingredientesCaros, 200.0f,
+                20, TecnicaPreparo.CHICKEN));
 
         Pedido pedidoCaro = new PedidoBuilder()
-                .setCodigoPedido("PED-FACADE-003")
-                .setNomeCliente("Cliente Facade")
+                .setCodigoPedido("PED-003")
+                .setNomeCliente("Lineu Silva")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Wagyu Facade")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Crispy")))
                 .build();
 
         List<String> cupom = HamburgueriaFacade.finalizarPedido(
@@ -185,16 +184,16 @@ class HamburgueriaFacadeTest {
     @Test
     void deveCancelarPedidoQuandoPagamentoForRecusado() {
         List<Ingrediente> ingredientesCaros = new ArrayList<>();
-        ingredientesCaros.add(IngredienteFactory.getIngrediente("Pao Premium Facade", 150, false));
-        ingredientesCaros.add(IngredienteFactory.getIngrediente("Picanha Facade", 400, false));
-        catalogo.cadastrarReceita(new ReceitaLanche("X-Picanha Facade", ingredientesCaros, 200.0f,
+        ingredientesCaros.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 150, false));
+        ingredientesCaros.add(IngredienteFactory.getIngrediente("Swift – Hambúrguer Angus 180g", 400, false));
+        catalogo.cadastrarReceita(new ReceitaLanche("X-Angus", ingredientesCaros, 200.0f,
                 20, TecnicaPreparo.TRADICIONAL));
 
         Pedido pedidoCaro = new PedidoBuilder()
-                .setCodigoPedido("PED-FACADE-004")
-                .setNomeCliente("Cliente Facade")
+                .setCodigoPedido("PED-004")
+                .setNomeCliente("Lineu Silva")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Picanha Facade")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Angus")))
                 .build();
 
         HamburgueriaFacade.finalizarPedido(
@@ -257,71 +256,57 @@ class HamburgueriaFacadeTest {
 
     @Test
     void deveRetornarExcecaoParaPedidoNuloEmFinalizarPedido() {
-        try {
-            HamburgueriaFacade.finalizarPedido(null, "Delivery", processadorAprovado, catalogo, cliente);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O pedido referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> HamburgueriaFacade.finalizarPedido(null, "Delivery", processadorAprovado, catalogo, cliente));
+        assertEquals("ERR01 - O pedido referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaModalidadeNulaEmFinalizarPedido() {
-        try {
-            HamburgueriaFacade.finalizarPedido(pedidoComLanche, null, processadorAprovado, catalogo, cliente);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A modalidade inserida não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> HamburgueriaFacade.finalizarPedido(pedidoComLanche, null, processadorAprovado, catalogo, cliente));
+        assertEquals("ERR02 - A modalidade inserida não pode ser nula ou em branco!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaProcessadorNuloEmFinalizarPedido() {
-        try {
-            HamburgueriaFacade.finalizarPedido(pedidoComLanche, "Delivery",
-                    null, catalogo, cliente);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O processador de pagamento referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> HamburgueriaFacade.finalizarPedido(pedidoComLanche, "Delivery",
+                        null, catalogo, cliente));
+        assertEquals("ERR01 - O processador de pagamento referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaCatalogoNuloEmFinalizarPedido() {
-        try {
-            HamburgueriaFacade.finalizarPedido(pedidoComLanche, "Delivery",
-                    processadorAprovado, null, cliente);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O catálogo de receitas referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> HamburgueriaFacade.finalizarPedido(pedidoComLanche, "Delivery",
+                        processadorAprovado, null, cliente));
+        assertEquals("ERR01 - O catálogo de receitas referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaObserverNuloEmFinalizarPedido() {
-        try {
-            HamburgueriaFacade.finalizarPedido(pedidoComLanche, "Delivery",
-                    processadorAprovado, catalogo, null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O observer referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> HamburgueriaFacade.finalizarPedido(pedidoComLanche, "Delivery",
+                        processadorAprovado, catalogo, null));
+        assertEquals("ERR01 - O observador referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaPedidoForaDoEstadoRecebido() {
         pedidoComLanche.confirmarPreparo();
 
-        try {
-            HamburgueriaFacade.finalizarPedido(pedidoComLanche, "Delivery",
-                    processadorAprovado, catalogo, cliente);
-        } catch (IllegalStateException e) {
-            assertEquals("O pedido deve se encontrar no estado 'Recebido' para ser finalizado!", e.getMessage());
-        }
+        IllegalStateException e = assertThrows(IllegalStateException.class,
+                () -> HamburgueriaFacade.finalizarPedido(pedidoComLanche, "Delivery",
+                        processadorAprovado, catalogo, cliente));
+        assertEquals("ERR07 - O pedido deve se encontrar no estado 'Recebido' para ser finalizado!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaPedidoNuloEmSolicitarDesconto() {
-        try {
-            HamburgueriaFacade.solicitarDesconto(null, 10.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O pedido referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> HamburgueriaFacade.solicitarDesconto(null, 10.0f));
+        assertEquals("ERR01 - O pedido referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
@@ -329,11 +314,9 @@ class HamburgueriaFacadeTest {
         Gerente gerente = new Gerente(6000.0f);
         gerente.setRegimeContratacao(new RegimeCLT());
 
-        try {
-            HamburgueriaFacade.consultarRelatorio(null, gerente);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A lista de pedidos referenciada não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> HamburgueriaFacade.consultarRelatorio(null, gerente));
+        assertEquals("ERR01 - A lista de pedidos referenciada não pode ser nula!", e.getMessage());
     }
 
     @Test
@@ -341,10 +324,8 @@ class HamburgueriaFacadeTest {
         List<Pedido> pedidos = new ArrayList<>();
         pedidos.add(pedidoComLanche);
 
-        try {
-            HamburgueriaFacade.consultarRelatorio(pedidos, null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O cargo referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> HamburgueriaFacade.consultarRelatorio(pedidos, null));
+        assertEquals("ERR01 - O cargo referenciado não pode ser nulo!", e.getMessage());
     }
 }

@@ -30,10 +30,8 @@ class GerenteTest {
     @Test
     void deveRetornarExcecaoParaBonusDesempenhoNegativo() {
         Gerente gerente = new Gerente(5000.0f);
-        try {
-            gerente.setBonusDesempenho(-200.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O bônus por desempenho não pode ser negativo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> gerente.setBonusDesempenho(-200.0f));
+        assertEquals("ERR03 - O bônus por desempenho não pode ser negativo!", e.getMessage());
     }
 }

@@ -10,7 +10,7 @@ public class Cardapio implements Iterable<ItemCardapio> {
 
     public Cardapio(ItemCardapio... itens) {
         if (itens == null) {
-            throw new IllegalArgumentException("A lista de itens no cardápio não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A lista de itens referenciada não pode ser nula!");
         }
         this.itens = Arrays.asList(itens);
     }

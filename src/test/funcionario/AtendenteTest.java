@@ -27,10 +27,8 @@ class AtendenteTest {
     @Test
     void deveRetornarExcecaoParaHorasTrabalhadasNegativas() {
         Atendente atendente = new Atendente(15.0f);
-        try {
-            atendente.setHorasTrabalhadas(-10);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O número de horas trabalhadas do colaborador não pode ser negativo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> atendente.setHorasTrabalhadas(-10));
+        assertEquals("ERR03 - O número de horas trabalhadas do colaborador não pode ser negativo!", e.getMessage());
     }
 }

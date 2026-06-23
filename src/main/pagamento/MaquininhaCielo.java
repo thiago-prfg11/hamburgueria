@@ -8,7 +8,7 @@ public class MaquininhaCielo extends MaquininhaBase {
 
     public boolean processar(int valorTransacao) {
         if (!valorValido(valorTransacao)) {
-            throw new IllegalArgumentException("O valor de transação referenciado é inválido!");
+            throw new IllegalArgumentException("ERR07 - O valor de transação referenciado é inválido!");
         }
         return aprovado(valorTransacao);
     }

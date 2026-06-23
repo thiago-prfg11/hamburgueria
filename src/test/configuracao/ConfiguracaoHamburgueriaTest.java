@@ -22,20 +22,16 @@ class ConfiguracaoHamburgueriaTest {
 
     @Test
     void deveRetornarExcecaoParaNomeLojaNulo() {
-        try {
-            ConfiguracaoHamburgueria.getInstance().setNomeLoja(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O nome da loja inserido é inválido!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ConfiguracaoHamburgueria.getInstance().setNomeLoja(null));
+        assertEquals("ERR02 - O nome da loja não pode ser nulo ou em branco!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaNomeLojaVazio() {
-        try {
-            ConfiguracaoHamburgueria.getInstance().setNomeLoja("   ");
-        } catch (IllegalArgumentException e) {
-            assertEquals("O nome da loja inserido é inválido!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ConfiguracaoHamburgueria.getInstance().setNomeLoja("   "));
+        assertEquals("ERR02 - O nome da loja não pode ser nulo ou em branco!", e.getMessage());
     }
 
     @Test
@@ -46,11 +42,9 @@ class ConfiguracaoHamburgueriaTest {
 
     @Test
     void deveRetornarExcecaoParaTaxaEntregaNegativa() {
-        try {
-            ConfiguracaoHamburgueria.getInstance().setTaxaEntregaPadrao(-1f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A taxa de entrega inserida é inválida!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ConfiguracaoHamburgueria.getInstance().setTaxaEntregaPadrao(-1f));
+        assertEquals("ERR03 - A taxa de entrega não pode ser negativa!", e.getMessage());
     }
 
     @Test
@@ -61,11 +55,9 @@ class ConfiguracaoHamburgueriaTest {
 
     @Test
     void deveRetornarExcecaoParaHorarioAberturaNulo() {
-        try {
-            ConfiguracaoHamburgueria.getInstance().setHorarioAbertura(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O horário de abertura inserido é inválido!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ConfiguracaoHamburgueria.getInstance().setHorarioAbertura(null));
+        assertEquals("ERR02 - O horário de abertura não pode ser nulo ou em branco!", e.getMessage());
     }
 
     @Test
@@ -76,11 +68,9 @@ class ConfiguracaoHamburgueriaTest {
 
     @Test
     void deveRetornarExcecaoParaHorarioFechamentoVazio() {
-        try {
-            ConfiguracaoHamburgueria.getInstance().setHorarioFechamento("");
-        } catch (IllegalArgumentException e) {
-            assertEquals("O horário de fechamento inserido é inválido!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ConfiguracaoHamburgueria.getInstance().setHorarioFechamento(""));
+        assertEquals("ERR02 - O horário de fechamento não pode ser nulo ou em branco!", e.getMessage());
     }
 
     @Test
@@ -91,11 +81,9 @@ class ConfiguracaoHamburgueriaTest {
 
     @Test
     void deveRetornarExcecaoParaOperadorLogadoNulo() {
-        try {
-            ConfiguracaoHamburgueria.getInstance().setOperadorLogado(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O operador inserido é inválido!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ConfiguracaoHamburgueria.getInstance().setOperadorLogado(null));
+        assertEquals("ERR02 - O operador atual não pode ser nulo ou em branco!", e.getMessage());
     }
 
     @Test
@@ -106,10 +94,8 @@ class ConfiguracaoHamburgueriaTest {
 
     @Test
     void deveRetornarExcecaoParaAlcadaMaximaNegativa() {
-        try {
-            ConfiguracaoHamburgueria.getInstance().setAlcadaMaximaAtendente(-10.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A alçada máxima inserida é inválida!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> ConfiguracaoHamburgueria.getInstance().setAlcadaMaximaAtendente(-10.0f));
+        assertEquals("ERR03 - A alçada máxima não pode ser negativa!", e.getMessage());
     }
 }

@@ -6,14 +6,14 @@ import java.util.List;
 
 public class RelatorioAtendente implements IRelatorioFaturamento {
 
-    private List<Pedido> pedidos;
+    private final List<Pedido> pedidos;
 
     public RelatorioAtendente(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
 
     public List<String> getDadosRelatorio() {
-        List<String> dados = new ArrayList<String>();
+        List<String> dados = new ArrayList<>();
         dados.add("Número de Pedidos Atendidos: " + this.pedidos.size());
         return dados;
     }

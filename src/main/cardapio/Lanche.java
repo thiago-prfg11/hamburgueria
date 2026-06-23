@@ -11,13 +11,13 @@ public class Lanche extends ItemCardapio {
     public Lanche(String descricao, float preco, List<Ingrediente> ingredientes) {
         super(descricao);
         if (preco < 0) {
-            throw new IllegalArgumentException("O preço do lanche não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O preço do lanche não pode ser negativo!");
         }
         if (ingredientes == null || ingredientes.isEmpty()) {
-            throw new IllegalArgumentException("A lista de ingredientes do lanche não pode ser nula ou vazia!");
+            throw new IllegalArgumentException("ERR02 - A lista de ingredientes do lanche não pode ser nula ou vazia!");
         }
         this.preco = preco;
-        this.ingredientes = new ArrayList<Ingrediente>(ingredientes);
+        this.ingredientes = new ArrayList<>(ingredientes);
     }
 
     public Lanche(ReceitaLanche receita) {
@@ -26,13 +26,13 @@ public class Lanche extends ItemCardapio {
 
     private static String extrairNome(ReceitaLanche receita) {
         if (receita == null) {
-            throw new IllegalArgumentException("A receita fornecida não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A receita referenciada não pode ser nula!");
         }
         return receita.getNome();
     }
 
     public List<Ingrediente> getIngredientes() {
-        return new ArrayList<Ingrediente>(this.ingredientes);
+        return new ArrayList<>(this.ingredientes);
     }
 
     public float getPreco() {
@@ -42,7 +42,7 @@ public class Lanche extends ItemCardapio {
     public int getCalorias() {
         int total = 0;
         for (Ingrediente ingrediente : this.ingredientes) {
-            total += ingrediente.getCalorias();
+            total += ingrediente.calorias();
         }
         return total;
     }

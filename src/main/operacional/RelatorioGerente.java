@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public class RelatorioGerente implements IRelatorioFaturamento {
 
-    private List<Pedido> pedidos;
+    private final List<Pedido> pedidos;
 
     public RelatorioGerente(List<Pedido> pedidos) {
         this.pedidos = pedidos;
@@ -19,7 +19,7 @@ public class RelatorioGerente implements IRelatorioFaturamento {
             faturamentoTotal += pedido.getValorTotal();
         }
         float ticketMedio = this.pedidos.isEmpty() ? 0 : faturamentoTotal / this.pedidos.size();
-        List<String> dados = new ArrayList<String>();
+        List<String> dados = new ArrayList<>();
         dados.add("Número de Pedidos Atendidos: " + this.pedidos.size());
         dados.add("Faturamento Total (Em Reais): R$" + String.format(Locale.US, "%.2f", faturamentoTotal));
         dados.add("Ticket Médio (Em Reais): R$" + String.format(Locale.US, "%.2f", ticketMedio));

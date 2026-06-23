@@ -9,10 +9,10 @@ public class InicioPreparoTarefa implements TarefaCozinha {
 
     public InicioPreparoTarefa(CozinhaPedido cozinhaPedido, Lanche lanche) {
         if (cozinhaPedido == null) {
-            throw new IllegalArgumentException("A cozinha referenciada não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A cozinha referenciada não pode ser nula!");
         }
         if (lanche == null) {
-            throw new IllegalArgumentException("O lanche referenciado não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O lanche referenciado não pode ser nulo!");
         }
         this.cozinhaPedido = cozinhaPedido;
         this.lanche = lanche;

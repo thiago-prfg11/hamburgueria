@@ -10,7 +10,8 @@ public class Atendente extends Cargo {
 
     public void setHorasTrabalhadas(int horasTrabalhadas) {
         if (horasTrabalhadas < 0) {
-            throw new IllegalArgumentException("O número de horas trabalhadas do colaborador não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O número de horas trabalhadas do colaborador não pode" +
+                    " ser negativo!");
         }
         this.horasTrabalhadas = horasTrabalhadas;
     }

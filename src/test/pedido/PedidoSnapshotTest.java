@@ -13,18 +13,16 @@ class PedidoSnapshotTest {
     @Test
     void deveManterCopiaIndependenteDaListaOriginal() {
         List<ItemCardapio> itensOriginais = new ArrayList<>();
-        itensOriginais.add(new Bebida("Refrigerante", 6.0f, 140));
+        itensOriginais.add(new Bebida("Guaraná Antarctica – Lata 350 ml", 6.0f, 140));
         PedidoSnapshot snapshot = new PedidoSnapshot(itensOriginais);
-        itensOriginais.add(new Bebida("Suco", 7.0f, 90));
-        assertEquals(1, snapshot.getItens().size());
+        itensOriginais.add(new Bebida("Natural One – Suco de Laranja Integral", 7.0f, 90));
+        assertEquals(1, snapshot.itens().size());
     }
 
     @Test
     void deveRetornarExcecaoParaItensNulos() {
-        try {
-            new PedidoSnapshot(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A lista de itens da snapshot não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new PedidoSnapshot(null));
+        assertEquals("ERR01 - A lista de itens da snapshot não pode ser nula!", e.getMessage());
     }
 }

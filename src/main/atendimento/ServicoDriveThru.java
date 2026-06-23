@@ -3,10 +3,10 @@ package main.atendimento;
 public class ServicoDriveThru {
 
     public String iniciar() {
-        return "Pedido aguardando retirada na janela pelo cliente";
+        return "O pedido está aguardando retirada na janela pelo cliente!";
     }
 
     public String cancelarDespacho() {
-        return "Retirada do pedido na janela cancelada";
+        return "A retirada do pedido pela janela foi cancelada!";
     }
 }

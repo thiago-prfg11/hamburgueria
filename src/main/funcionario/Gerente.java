@@ -10,7 +10,7 @@ public class Gerente extends Cargo {
 
     public void setBonusDesempenho(float bonusDesempenho) {
         if (bonusDesempenho < 0) {
-            throw new IllegalArgumentException("O bônus por desempenho não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O bônus por desempenho não pode ser negativo!");
         }
         this.bonusDesempenho = bonusDesempenho;
     }

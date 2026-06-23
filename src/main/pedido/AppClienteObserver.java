@@ -9,7 +9,7 @@ public class AppClienteObserver implements IObserver {
 
     public AppClienteObserver(String nomeCliente) {
         if (nomeCliente == null || nomeCliente.isBlank()) {
-            throw new IllegalArgumentException("O nome do cliente não pode ser nulo ou vazio!");
+            throw new IllegalArgumentException("ERR02 - O nome do cliente não pode ser nulo ou vazio!");
         }
         this.nomeCliente = nomeCliente;
     }

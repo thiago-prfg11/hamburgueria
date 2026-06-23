@@ -25,10 +25,8 @@ class CardapioTest {
 
     @Test
     void deveRetornarExcecaoParaItensNulos() {
-        try {
-            new Cardapio((ItemCardapio[]) null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A lista de itens no cardápio não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new Cardapio((ItemCardapio[]) null));
+        assertEquals("ERR01 - A lista de itens referenciada não pode ser nula!", e.getMessage());
     }
 }

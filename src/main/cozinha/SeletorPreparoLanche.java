@@ -7,15 +7,11 @@ public class SeletorPreparoLanche {
 
     public static PreparoLanche obterPreparo(ReceitaLanche receita) {
         if (receita == null) {
-            throw new IllegalArgumentException("A receita não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A receita referenciada não pode ser nula!");
         }
-        TecnicaPreparo tecnica = receita.getTecnicaPreparo();
-        if (tecnica == TecnicaPreparo.TRADICIONAL || tecnica == TecnicaPreparo.ARTESANAL) {
-            return new PreparoGrelhado(receita);
-        }
-        if (tecnica == TecnicaPreparo.CHICKEN) {
-            return new PreparoEmpanado(receita);
-        }
-        throw new IllegalArgumentException("Técnica de preparo desconhecida!");
+        return switch (receita.getTecnicaPreparo()) {
+            case TRADICIONAL, ARTESANAL -> new PreparoGrelhado(receita);
+            case CHICKEN -> new PreparoEmpanado(receita);
+        };
     }
 }

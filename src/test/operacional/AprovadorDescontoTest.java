@@ -29,10 +29,10 @@ class AprovadorDescontoTest {
         atendente.setSuperior(supervisor);
 
         pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CHAIN-001")
-                .setNomeCliente("Cliente Chain")
+                .setCodigoPedido("PED-001")
+                .setNomeCliente("Thiago")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Bebida("Refrigerante Chain", 10.0f, 140))
+                .addItem(new Bebida("Coca-Cola – Lata 350 ml", 10.0f, 140))
                 .build();
     }
 
@@ -109,28 +109,22 @@ class AprovadorDescontoTest {
 
     @Test
     void deveRetornarExcecaoParaPedidoNuloNaSolicitacao() {
-        try {
-            new SolicitacaoDesconto(null, 10.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O pedido referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new SolicitacaoDesconto(null, 10.0f));
+        assertEquals("ERR01 - O pedido referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaPercentualNegativoNaSolicitacao() {
-        try {
-            new SolicitacaoDesconto(pedido, -1.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O percentual de desconto não pode ser negativo ou maior que 100!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new SolicitacaoDesconto(pedido, -1.0f));
+        assertEquals("ERR04 - O percentual de desconto não pode ser negativo ou maior que 100!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaPercentualAcimaDe100NaSolicitacao() {
-        try {
-            new SolicitacaoDesconto(pedido, 101.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O percentual de desconto não pode ser negativo ou maior que 100!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new SolicitacaoDesconto(pedido, 101.0f));
+        assertEquals("ERR04 - O percentual de desconto não pode ser negativo ou maior que 100!", e.getMessage());
     }
 }

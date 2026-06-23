@@ -1,7 +1,6 @@
 package main.atendimento;
 
 import main.cardapio.Ingrediente;
-
 import java.util.ArrayList;
 import java.util.List;
 

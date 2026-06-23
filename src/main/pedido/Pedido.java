@@ -19,18 +19,18 @@ public class Pedido extends Observable {
     private EstadoPedido estado;
 
     public Pedido(String codigoPedido) {
-        this(codigoPedido, new ArrayList<ItemCardapio>());
+        this(codigoPedido, new ArrayList<>());
     }
 
     public Pedido(String codigoPedido, List<ItemCardapio> itens) {
         if (codigoPedido == null || codigoPedido.isBlank()) {
-            throw new IllegalArgumentException("O código do pedido não pode ser nulo ou vazio!");
+            throw new IllegalArgumentException("ERR02 - O código do pedido não pode ser nulo ou vazio!");
         }
         if (itens == null) {
-            throw new IllegalArgumentException("A lista de itens referenciada não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A lista de itens referenciada não pode ser nula!");
         }
         this.codigoPedido = codigoPedido;
-        this.itens = new ArrayList<ItemCardapio>(itens);
+        this.itens = new ArrayList<>(itens);
         this.estado = EstadoRecebido.getInstance();
         this.percentualDesconto = 0;
     }
@@ -79,7 +79,7 @@ public class Pedido extends Observable {
 
     public void setNomeCliente(String nomeCliente) {
         if (nomeCliente == null || nomeCliente.isBlank()) {
-            throw new IllegalArgumentException("O nome do cliente não pode ser nulo ou vazio!");
+            throw new IllegalArgumentException("ERR02 - O nome do cliente não pode ser nulo ou vazio!");
         }
         this.nomeCliente = nomeCliente;
     }
@@ -106,7 +106,7 @@ public class Pedido extends Observable {
 
     public void setDistanciaKm(float distanciaKm) {
         if (distanciaKm < 0) {
-            throw new IllegalArgumentException("A distância de entrega não pode ser negativa!");
+            throw new IllegalArgumentException("ERR03 - A distância de entrega não pode ser negativa!");
         }
         this.distanciaKm = distanciaKm;
     }
@@ -117,14 +117,15 @@ public class Pedido extends Observable {
 
     public void setValorFrete(float valorFrete) {
         if (valorFrete < 0) {
-            throw new IllegalArgumentException("O valor do frente não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O valor do frete não pode ser negativo!");
         }
         this.valorFrete = valorFrete;
     }
 
     public void aplicarDesconto(float percentual) {
         if (percentual < 0 || percentual > 100) {
-            throw new IllegalArgumentException("O percentual de desconto não pode ser negativo ou maior que 100!");
+            throw new IllegalArgumentException("ERR04 - O percentual de desconto não pode ser" +
+                    " negativo ou maior que 100!");
         }
         this.percentualDesconto = percentual;
     }
@@ -134,7 +135,7 @@ public class Pedido extends Observable {
     }
 
     public List<ItemCardapio> getItens() {
-        return new ArrayList<ItemCardapio>(this.itens);
+        return new ArrayList<>(this.itens);
     }
 
     public float getValorItens() {

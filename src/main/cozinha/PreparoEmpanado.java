@@ -10,7 +10,7 @@ public class PreparoEmpanado extends PreparoLanche {
     }
 
     protected void prepararProteina(Ingrediente proteina) {
-        etapas.add("Empanar, Fritar e Adicionar " + proteina.getNome());
+        etapas.add("Empanar, Fritar e Adicionar " + proteina.nome());
     }
 
     @Override

@@ -40,10 +40,8 @@ class EmbaladorPedidoTest {
 
     @Test
     void deveRetornarExcecaoParaFabricaNula() {
-        try {
-            new EmbaladorPedido(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A fábrica da embalagem inserida não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new EmbaladorPedido(null));
+        assertEquals("ERR01 - A fábrica da embalagem referenciada não pode ser nula!", e.getMessage());
     }
 }

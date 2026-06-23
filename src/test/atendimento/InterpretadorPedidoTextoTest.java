@@ -12,28 +12,28 @@ class InterpretadorPedidoTextoTest {
 
     @Test
     void deveInterpretarUnicoIngrediente() {
-        IngredienteFactory.getIngrediente("PaoBriocheInterpreterV2", 120, false);
-        InterpretadorExpressaoPedido interpretador = new InterpretadorPedidoTexto("PaoBriocheInterpreterV2");
+        IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false);
+        InterpretadorExpressaoPedido interpretador = new InterpretadorPedidoTexto("Wickbold – Pão Brioche para Hambúrguer");
         assertEquals(1, interpretador.interpretar().size());
     }
 
     @Test
     void deveInterpretarExpressaoComAdicoes() {
-        IngredienteFactory.getIngrediente("PaoBriocheInterpreterV2", 120, false);
-        IngredienteFactory.getIngrediente("CarneAngusInterpreterV2", 280, false);
-        IngredienteFactory.getIngrediente("BaconInterpreterV2", 150, false);
+        IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false);
+        IngredienteFactory.getIngrediente("Swift – Hambúrguer Angus 180g", 280, false);
+        IngredienteFactory.getIngrediente("Seara – Bacon em Fatias", 150, false);
         InterpretadorExpressaoPedido interpretador = new InterpretadorPedidoTexto(
-                "PaoBriocheInterpreterV2 + CarneAngusInterpreterV2 + BaconInterpreterV2");
+                "Wickbold – Pão Brioche para Hambúrguer + Swift – Hambúrguer Angus 180g + Seara – Bacon em Fatias");
         assertEquals(3, interpretador.interpretar().size());
     }
 
     @Test
     void deveInterpretarExpressaoComRemocao() {
-        IngredienteFactory.getIngrediente("PaoBriocheInterpreterV2", 120, false);
-        IngredienteFactory.getIngrediente("CarneAngusInterpreterV2", 280, false);
-        Ingrediente cebola = IngredienteFactory.getIngrediente("CebolaInterpreterV2", 8, false);
+        IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false);
+        IngredienteFactory.getIngrediente("Swift – Hambúrguer Angus 180g", 280, false);
+        Ingrediente cebola = IngredienteFactory.getIngrediente("Hortifruti Natural da Terra – Cebola Nacional", 8, false);
         InterpretadorExpressaoPedido interpretador = new InterpretadorPedidoTexto(
-                "PaoBriocheInterpreterV2 + CarneAngusInterpreterV2 + CebolaInterpreterV2 - CebolaInterpreterV2");
+                "Wickbold – Pão Brioche para Hambúrguer + Swift – Hambúrguer Angus 180g + Hortifruti Natural da Terra – Cebola Nacional - Hortifruti Natural da Terra – Cebola Nacional");
         List<Ingrediente> resultado = interpretador.interpretar();
         assertEquals(2, resultado.size());
         assertFalse(resultado.contains(cebola));
@@ -41,30 +41,24 @@ class InterpretadorPedidoTextoTest {
 
     @Test
     void deveRetornarExcecaoParaElementoInvalido() {
-        IngredienteFactory.getIngrediente("PaoBriocheInterpreterV2", 120, false);
-        try {
-            new InterpretadorPedidoTexto("PaoBriocheInterpreterV2 + IngredienteFantasmaV2");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Expressão com elemento inválido", e.getMessage());
-        }
+        IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new InterpretadorPedidoTexto("Wickbold – Pão Brioche para Hambúrguer + IngredienteFantasmaV2"));
+        assertEquals("ERR01 - O ingrediente referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaExpressaoComOperadorNoFim() {
-        IngredienteFactory.getIngrediente("PaoBriocheInterpreterV2", 120, false);
-        try {
-            new InterpretadorPedidoTexto("PaoBriocheInterpreterV2 +");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Expressão inválida", e.getMessage());
-        }
+        IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false);
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new InterpretadorPedidoTexto("Wickbold – Pão Brioche para Hambúrguer +"));
+        assertEquals("ERR01 - O ingrediente referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaContextoNulo() {
-        try {
-            new InterpretadorPedidoTexto(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Expressão inválida", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new InterpretadorPedidoTexto(null));
+        assertEquals("ERR02 - A Expressão referenciada não pode ser nula ou em branco!", e.getMessage());
     }
 }

@@ -2,7 +2,7 @@ package main.pedido;
 
 public class EstadoSaiuParaEntrega extends EstadoPedido {
 
-    private EstadoSaiuParaEntrega() {};
+    private EstadoSaiuParaEntrega() {}
     private static final EstadoSaiuParaEntrega instance = new EstadoSaiuParaEntrega();
     public static EstadoSaiuParaEntrega getInstance() {
         return instance;

@@ -21,18 +21,21 @@ class PainelCozinhaTest {
 
     @BeforeEach
     void setUp() {
+        IngredienteFactory.limpar();
         catalogo = new CatalogoReceitas();
 
         List<Ingrediente> ingredientesXBurger = new ArrayList<>();
-        ingredientesXBurger.add(IngredienteFactory.getIngrediente("Pão Brioche Painel", 120, false));
-        ingredientesXBurger.add(IngredienteFactory.getIngrediente("Carne Angus Painel", 280, false));
-        ingredientesXBurger.add(IngredienteFactory.getIngrediente("Queijo Cheddar Painel", 90, true));
-        catalogo.cadastrarReceita(new ReceitaLanche("X-Burger Painel", ingredientesXBurger, 22.90f, 12, TecnicaPreparo.TRADICIONAL));
+        ingredientesXBurger.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false));
+        ingredientesXBurger.add(IngredienteFactory.getIngrediente("Hambúrguer Angus 180g", 280, false));
+        ingredientesXBurger.add(IngredienteFactory.getIngrediente("President – Queijo Cheddar", 90, true));
+        catalogo.cadastrarReceita(new ReceitaLanche("X-Burger", ingredientesXBurger, 22.90f,
+                12, TecnicaPreparo.TRADICIONAL));
 
         List<Ingrediente> ingredientesFrango = new ArrayList<>();
-        ingredientesFrango.add(IngredienteFactory.getIngrediente("Pão Australiano Painel", 110, false));
-        ingredientesFrango.add(IngredienteFactory.getIngrediente("Filé de Frango Painel", 220, false));
-        catalogo.cadastrarReceita(new ReceitaLanche("Frango Crispy Painel", ingredientesFrango, 21.90f, 14, TecnicaPreparo.CHICKEN));
+        ingredientesFrango.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 110, false));
+        ingredientesFrango.add(IngredienteFactory.getIngrediente("Sadia – Filé de Peito Empanado Crocante", 220, false));
+        catalogo.cadastrarReceita(new ReceitaLanche("X-Crispy", ingredientesFrango, 21.90f,
+                14, TecnicaPreparo.CHICKEN));
 
         cozinhaPedido = new CozinhaPedido(catalogo);
         painel = new PainelCozinha(cozinhaPedido);
@@ -41,11 +44,11 @@ class PainelCozinhaTest {
     @Test
     void deveAdicionarLanchesNaFilaAoReceberPedido() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-001")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-001")
+                .setNomeCliente("Marco")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Burger Painel")))
-                .addItem(new Bebida("Refrigerante Painel", 6.0f, 140))
+                .addItem(new Lanche(catalogo.obterReceita("X-Burger")))
+                .addItem(new Bebida("Coca-Cola – Lata 350 ml", 6.0f, 140))
                 .build();
         pedido.confirmarPreparo();
 
@@ -57,10 +60,10 @@ class PainelCozinhaTest {
     @Test
     void naoDeveAdicionarBebidaNaFila() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-002")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-002")
+                .setNomeCliente("Elisa")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Bebida("Suco Painel", 7.0f, 90))
+                .addItem(new Bebida("Natural One – Suco de Laranja Integral", 7.0f, 90))
                 .build();
         pedido.confirmarPreparo();
 
@@ -72,10 +75,10 @@ class PainelCozinhaTest {
     @Test
     void deveExecutarProximaTarefaEMoverParaHistorico() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-003")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-003")
+                .setNomeCliente("Daniel")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Burger Painel")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Burger")))
                 .build();
         pedido.confirmarPreparo();
         painel.receberPedido(pedido);
@@ -89,42 +92,42 @@ class PainelCozinhaTest {
     @Test
     void deveRegistrarInicioDePreparoAoExecutarTarefa() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-004")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-004")
+                .setNomeCliente("Douglas")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Burger Painel")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Burger")))
                 .build();
         pedido.confirmarPreparo();
         painel.receberPedido(pedido);
 
         painel.executarProximaTarefa();
 
-        assertEquals("X-Burger Painel Em Preparo!", cozinhaPedido.getUltimoResultado());
+        assertEquals("X-Burger Em Preparo!", cozinhaPedido.getUltimoResultado());
     }
 
     @Test
     void deveRegistrarInicioDePreparoParaLancheChicken() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-005")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-005")
+                .setNomeCliente("Thallison")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("Frango Crispy Painel")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Crispy")))
                 .build();
         pedido.confirmarPreparo();
         painel.receberPedido(pedido);
 
         painel.executarProximaTarefa();
 
-        assertEquals("Frango Crispy Painel Em Preparo!", cozinhaPedido.getUltimoResultado());
+        assertEquals("X-Crispy Em Preparo!", cozinhaPedido.getUltimoResultado());
     }
 
     @Test
     void deveDesfazerUltimaTarefaEDevolverParaFila() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-006")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-006")
+                .setNomeCliente("Samara")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Burger Painel")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Burger")))
                 .build();
         pedido.confirmarPreparo();
         painel.receberPedido(pedido);
@@ -139,10 +142,10 @@ class PainelCozinhaTest {
     @Test
     void deveRegistrarDescarteAoDesfazerTarefa() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-007")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-007")
+                .setNomeCliente("Débora")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Burger Painel")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Burger")))
                 .build();
         pedido.confirmarPreparo();
         painel.receberPedido(pedido);
@@ -150,17 +153,17 @@ class PainelCozinhaTest {
 
         painel.desfazerUltimaTarefa();
 
-        assertEquals("X-Burger Painel Descartado!", cozinhaPedido.getUltimoResultado());
+        assertEquals("X-Burger Descartado!", cozinhaPedido.getUltimoResultado());
     }
 
     @Test
     void deveManterOrdemCorretaNaFilaAoDesfazer() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-008")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-008")
+                .setNomeCliente("Davi")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Burger Painel")))
-                .addItem(new Lanche(catalogo.obterReceita("Frango Crispy Painel")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Burger")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Crispy")))
                 .build();
         pedido.confirmarPreparo();
         painel.receberPedido(pedido);
@@ -169,19 +172,19 @@ class PainelCozinhaTest {
 
         painel.executarProximaTarefa();
 
-        assertEquals("X-Burger Painel Em Preparo!", cozinhaPedido.getUltimoResultado());
+        assertEquals("X-Burger Em Preparo!", cozinhaPedido.getUltimoResultado());
     }
 
     @Test
     void deveRegistrarErroQuandoReceitaNaoEncontradaNoCatalogo() {
         List<Ingrediente> ingredientes = new ArrayList<>();
-        ingredientes.add(IngredienteFactory.getIngrediente("Pão Sem Receita Painel", 120, false));
-        ingredientes.add(IngredienteFactory.getIngrediente("Carne Sem Receita Painel", 280, false));
-        Lanche lancheSemReceita = new Lanche("Lanche Sem Receita", 15.0f, ingredientes);
+        ingredientes.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false));
+        ingredientes.add(IngredienteFactory.getIngrediente("Swift – Hambúrguer Angus 180g", 280, false));
+        Lanche lancheSemReceita = new Lanche("X-Maximo", 15.0f, ingredientes);
 
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-009")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-009")
+                .setNomeCliente("Matheus")
                 .setEstrategiaFrete(new FreteFixo())
                 .addItem(lancheSemReceita)
                 .build();
@@ -190,7 +193,7 @@ class PainelCozinhaTest {
 
         painel.executarProximaTarefa();
 
-        assertEquals("A receita de Lanche Sem Receita não foi encontrada no catálogo!", cozinhaPedido.getUltimoResultado());
+        assertEquals("A receita de X-Maximo não foi encontrada no catálogo!", cozinhaPedido.getUltimoResultado());
     }
 
     @Test
@@ -210,10 +213,10 @@ class PainelCozinhaTest {
     @Test
     void deveRetornarFilaDeEsperaIndependenteDaOriginal() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-010")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-010")
+                .setNomeCliente("Alice")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Burger Painel")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Burger")))
                 .build();
         pedido.confirmarPreparo();
         painel.receberPedido(pedido);
@@ -225,62 +228,55 @@ class PainelCozinhaTest {
 
     @Test
     void deveRetornarExcecaoParaPedidoNulo() {
-        try {
-            painel.receberPedido(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O pedido referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> painel.receberPedido(null));
+        assertEquals("ERR01 - O pedido referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaPedidoForaDoEstadoEmPreparo() {
         Pedido pedido = new PedidoBuilder()
-                .setCodigoPedido("PED-CMD-011")
-                .setNomeCliente("Cliente Command")
+                .setCodigoPedido("PED-011")
+                .setNomeCliente("César")
                 .setEstrategiaFrete(new FreteFixo())
-                .addItem(new Lanche(catalogo.obterReceita("X-Burger Painel")))
+                .addItem(new Lanche(catalogo.obterReceita("X-Burger")))
                 .build();
 
-        try {
-            painel.receberPedido(pedido);
-        } catch (IllegalStateException e) {
-            assertEquals("O pedido deve estar com o status 'Em Preparo' para ser enviado à cozinha!", e.getMessage());
-        }
+        IllegalStateException e = assertThrows(IllegalStateException.class,
+                () -> painel.receberPedido(pedido));
+        assertEquals("ERR07 - O pedido deve estar com o status 'Em Preparo' para ser enviado à cozinha!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaCozinhaNulaNoPainelCozinha() {
-        try {
-            new PainelCozinha(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("A cozinha referenciada não pode ser nula!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new PainelCozinha(null));
+        assertEquals("ERR01 - A cozinha referenciada não pode ser nula!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaCatalogoNuloNoCozinhaPedido() {
-        try {
-            new CozinhaPedido(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O Catálogo de Receitas referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new CozinhaPedido(null));
+        assertEquals("ERR01 - O Catálogo de Receitas referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaLancheNuloNoInicioPreparoTarefa() {
-        try {
-            new InicioPreparoTarefa(cozinhaPedido, null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O lanche referenciado não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new InicioPreparoTarefa(cozinhaPedido, null));
+        assertEquals("ERR01 - O lanche referenciado não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaCozinhaNulaNoInicioPreparoTarefa() {
-        try {
-            new InicioPreparoTarefa(null, new Lanche(catalogo.obterReceita("X-Burger Painel")));
-        } catch (IllegalArgumentException e) {
-            assertEquals("A cozinha referenciada não pode ser nula!", e.getMessage());
-        }
+        List<Ingrediente> ingredientes = new ArrayList<>();
+        ingredientes.add(IngredienteFactory.getIngrediente("Wickbold – Pão Brioche para Hambúrguer", 120, false));
+        ingredientes.add(IngredienteFactory.getIngrediente("Swift – Hambúrguer Angus 180g", 280, false));
+        Lanche lanche = new Lanche("X-Burger", 22.90f, ingredientes);
+
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new InicioPreparoTarefa(null, lanche));
+        assertEquals("ERR01 - A cozinha referenciada não pode ser nula!", e.getMessage());
     }
 }

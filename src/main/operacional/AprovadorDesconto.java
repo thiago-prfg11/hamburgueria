@@ -7,7 +7,7 @@ public abstract class AprovadorDesconto {
 
     public AprovadorDesconto(float limiteDesconto) {
         if (limiteDesconto < 0 || limiteDesconto > 100) {
-            throw new IllegalArgumentException("O limite de desconto não pode ser negativo ou maior que 100!");
+            throw new IllegalArgumentException("ERR04 - O limite de desconto não pode ser negativo ou maior que 100!");
         }
         this.limiteDesconto = limiteDesconto;
     }
@@ -17,8 +17,8 @@ public abstract class AprovadorDesconto {
     }
 
     public String aprovarDesconto(SolicitacaoDesconto solicitacao) {
-        if (solicitacao.getPercentualDesconto() <= this.limiteDesconto) {
-            solicitacao.getPedido().aplicarDesconto(solicitacao.getPercentualDesconto());
+        if (solicitacao.percentualDesconto() <= this.limiteDesconto) {
+            solicitacao.pedido().aplicarDesconto(solicitacao.percentualDesconto());
             return getDescricaoCargo();
         }
         if (this.superior != null) {

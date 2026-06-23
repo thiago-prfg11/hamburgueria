@@ -21,7 +21,7 @@ public class ConfiguracaoHamburgueria {
 
     public void setNomeLoja(String nomeLoja) {
         if (nomeLoja == null || nomeLoja.isBlank()) {
-            throw new IllegalArgumentException("O nome da loja inserido é inválido!");
+            throw new IllegalArgumentException("ERR02 - O nome da loja não pode ser nulo ou em branco!");
         }
         this.nomeLoja = nomeLoja;
     }
@@ -32,7 +32,7 @@ public class ConfiguracaoHamburgueria {
 
     public void setTaxaEntregaPadrao(float taxaEntregaPadrao) {
         if (taxaEntregaPadrao < 0) {
-            throw new IllegalArgumentException("A taxa de entrega inserida é inválida!");
+            throw new IllegalArgumentException("ERR03 - A taxa de entrega não pode ser negativa!");
         }
         this.taxaEntregaPadrao = taxaEntregaPadrao;
     }
@@ -43,7 +43,7 @@ public class ConfiguracaoHamburgueria {
 
     public void setHorarioAbertura(String horarioAbertura) {
         if (horarioAbertura == null || horarioAbertura.isBlank()) {
-            throw new IllegalArgumentException("O horário de abertura inserido é inválido!");
+            throw new IllegalArgumentException("ERR02 - O horário de abertura não pode ser nulo ou em branco!");
         }
         this.horarioAbertura = horarioAbertura;
     }
@@ -54,7 +54,7 @@ public class ConfiguracaoHamburgueria {
 
     public void setHorarioFechamento(String horarioFechamento) {
         if (horarioFechamento == null || horarioFechamento.isBlank()) {
-            throw new IllegalArgumentException("O horário de fechamento inserido é inválido!");
+            throw new IllegalArgumentException("ERR02 - O horário de fechamento não pode ser nulo ou em branco!");
         }
         this.horarioFechamento = horarioFechamento;
     }
@@ -65,7 +65,7 @@ public class ConfiguracaoHamburgueria {
 
     public void setOperadorLogado(String operadorLogado) {
         if (operadorLogado == null || operadorLogado.isBlank()) {
-            throw new IllegalArgumentException("O operador inserido é inválido!");
+            throw new IllegalArgumentException("ERR02 - O operador atual não pode ser nulo ou em branco!");
         }
         this.operadorLogado = operadorLogado;
     }
@@ -76,7 +76,7 @@ public class ConfiguracaoHamburgueria {
 
     public void setAlcadaMaximaAtendente(float alcadaMaximaAtendente) {
         if (alcadaMaximaAtendente < 0) {
-            throw new IllegalArgumentException("A alçada máxima inserida é inválida!");
+            throw new IllegalArgumentException("ERR03 - A alçada máxima não pode ser negativa!");
         }
         this.alcadaMaximaAtendente = alcadaMaximaAtendente;
     }

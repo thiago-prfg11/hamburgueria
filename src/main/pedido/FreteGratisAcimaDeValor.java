@@ -7,10 +7,10 @@ public class FreteGratisAcimaDeValor implements EstrategiaFrete {
 
     public FreteGratisAcimaDeValor(float valorMinimoFreteGratis, float valorFretePadrao) {
         if (valorMinimoFreteGratis < 0) {
-            throw new IllegalArgumentException("O valor mínimo para o frete grátis não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O valor mínimo para o frete grátis não pode ser negativo!");
         }
         if (valorFretePadrao < 0) {
-            throw new IllegalArgumentException("O valor padrão do frete não pode ser negativo!");
+            throw new IllegalArgumentException("ERR03 - O valor padrão do frete não pode ser negativo!");
         }
         this.valorMinimoFreteGratis = valorMinimoFreteGratis;
         this.valorFretePadrao = valorFretePadrao;

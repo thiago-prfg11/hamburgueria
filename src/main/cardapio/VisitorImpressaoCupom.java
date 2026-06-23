@@ -1,7 +1,6 @@
 package main.cardapio;
 
 import main.pedido.Pedido;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

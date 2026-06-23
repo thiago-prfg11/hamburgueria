@@ -16,10 +16,10 @@ public class RelatorioFaturamentoProxy implements IRelatorioFaturamento {
 
     public RelatorioFaturamentoProxy(List<Pedido> pedidos, Cargo cargo) {
         if (pedidos == null) {
-            throw new IllegalArgumentException("A lista de pedidos referenciada não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A lista de pedidos referenciada não pode ser nula!");
         }
         if (cargo == null) {
-            throw new IllegalArgumentException("O cargo referenciado não pode ser nulo!");
+            throw new IllegalArgumentException("ERR01 - O cargo referenciado não pode ser nulo!");
         }
         this.pedidos = pedidos;
         this.cargo = cargo;
@@ -31,7 +31,7 @@ public class RelatorioFaturamentoProxy implements IRelatorioFaturamento {
                 case Gerente gerente -> this.relatorio = new RelatorioGerente(this.pedidos);
                 case Supervisor supervisor -> this.relatorio = new RelatorioSupervisor(this.pedidos);
                 case Atendente atendente -> this.relatorio = new RelatorioAtendente(this.pedidos);
-                default -> throw new IllegalArgumentException("Nível de Autoridade Insuficiente Para" +
+                default -> throw new IllegalArgumentException("ERR11 - Nível de Autoridade Insuficiente Para" +
                         " Acessar Este Relatório!");
             }
         }

@@ -12,7 +12,7 @@ class ServicoConsumoLocalTest {
 
     @Test
     void deveAlterarEstadoPedidoParaEntregue() {
-        Pedido pedido = new Pedido("PED-CONSUMO-001");
+        Pedido pedido = new Pedido("PED-001");
         pedido.setEstado(EstadoPronto.getInstance());
         IServicoPedido servico = ServicoPedidoFactory.obterServico("ConsumoLocal");
         servico.iniciar(pedido);
@@ -21,17 +21,17 @@ class ServicoConsumoLocalTest {
 
     @Test
     void deveRetornarDescricaoDeConsumoLocalComEmbalagemBalcao() {
-        Pedido pedido = new Pedido("PED-CONSUMO-002");
+        Pedido pedido = new Pedido("PED-002");
         pedido.setEstado(EstadoPronto.getInstance());
         IServicoPedido servico = ServicoPedidoFactory.obterServico("ConsumoLocal");
         String resultado = servico.iniciar(pedido);
-        assertEquals("Pedido aguardando retirada no balcão pelo atendente," +
+        assertEquals("O pedido está aguardando retirada no balcão pelo atendente," +
                 " embalado em Bandeja com Guardanapo", resultado);
     }
 
     @Test
     void deveCancelarReservaDeMesa() {
         IServicoPedido servico = ServicoPedidoFactory.obterServico("ConsumoLocal");
-        assertEquals("Retirada do pedido pelo atendente cancelada", servico.cancelarDespacho());
+        assertEquals("A retirada do pedido pelo atendente foi cancelada!", servico.cancelarDespacho());
     }
 }

@@ -25,40 +25,32 @@ class SupervisorTest {
 
     @Test
     void deveRetornarExcecaoParaSalarioBaseNegativoNoConstrutor() {
-        try {
-            new Supervisor(-100.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O salário base do colaborador não pode ser negativo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> new Supervisor(-100.0f));
+        assertEquals("ERR03 - O salário base do colaborador não pode ser negativo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaSalarioBaseNegativoNoSetter() {
         Supervisor supervisor = new Supervisor(3000.0f);
-        try {
-            supervisor.setSalarioBase(-50.0f);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O salário base do colaborador não pode ser negativo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> supervisor.setSalarioBase(-50.0f));
+        assertEquals("ERR03 - O salário base do colaborador não pode ser negativo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaRegimeContratacaoNulo() {
         Supervisor supervisor = new Supervisor(3000.0f);
-        try {
-            supervisor.setRegimeContratacao(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("O regime de contratação do colaborador não pode ser nulo!", e.getMessage());
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> supervisor.setRegimeContratacao(null));
+        assertEquals("ERR01 - O regime de contratação do colaborador não pode ser nulo!", e.getMessage());
     }
 
     @Test
     void deveRetornarExcecaoParaCalcularSalarioSemRegimeDefinido() {
         Supervisor supervisor = new Supervisor(3000.0f);
-        try {
-            supervisor.calcularSalario();
-        } catch (IllegalStateException e) {
-            assertEquals("O regime de contratação do colaborador não pode ser nulo!", e.getMessage());
-        }
+        IllegalStateException e = assertThrows(IllegalStateException.class,
+                () -> supervisor.calcularSalario());
+        assertEquals("ERR01 - O regime de contratação do colaborador não pode ser nulo!", e.getMessage());
     }
 }

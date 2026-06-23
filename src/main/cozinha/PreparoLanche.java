@@ -14,10 +14,11 @@ public abstract class PreparoLanche {
 
     public PreparoLanche(ReceitaLanche receita) {
         if (receita == null) {
-            throw new IllegalArgumentException("A receita não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A receita referenciada não pode ser nula!");
         }
         if (receita.getIngredientesBase().size() < 2) {
-            throw new IllegalArgumentException("A receita deve conter ao menos um pão e uma proteína!");
+            throw new IllegalArgumentException("ERR07 - A receita referenciada deve conter ao menos um pão" +
+                    " e uma proteína!");
         }
         this.receita = receita;
     }
@@ -33,7 +34,7 @@ public abstract class PreparoLanche {
     }
 
     protected void tostarEIncluirPao(Ingrediente pao) {
-        etapas.add("Tostar e Adicionar " + pao.getNome());
+        etapas.add("Tostar e Adicionar " + pao.nome());
     }
 
     protected abstract void prepararProteina(Ingrediente proteina);
@@ -43,9 +44,9 @@ public abstract class PreparoLanche {
             etapas.add("Sem Camadas Adicionais");
             return;
         }
-        List<String> nomes = new ArrayList<String>();
+        List<String> nomes = new ArrayList<>();
         for (Ingrediente ingrediente : camadas) {
-            nomes.add(ingrediente.getNome());
+            nomes.add(ingrediente.nome());
         }
         etapas.add("Adicionar " + String.join(", ", nomes));
     }

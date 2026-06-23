@@ -2,7 +2,7 @@ package main.pedido;
 
 public class EstadoPronto extends EstadoPedido {
 
-    private EstadoPronto() {};
+    private EstadoPronto() {}
     private static final EstadoPronto instance = new EstadoPronto();
     public static EstadoPronto getInstance() {
         return instance;

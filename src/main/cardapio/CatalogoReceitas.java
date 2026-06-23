@@ -9,7 +9,7 @@ public class CatalogoReceitas {
 
     public void cadastrarReceita(ReceitaLanche receita) {
         if (receita == null) {
-            throw new IllegalArgumentException("A receita inserida não pode ser nula!");
+            throw new IllegalArgumentException("ERR01 - A receita referenciada não pode ser nula!");
         }
         this.receitas.put(receita.getNome(), receita);
     }
@@ -17,12 +17,12 @@ public class CatalogoReceitas {
     public ReceitaLanche obterReceita(String nome) {
         ReceitaLanche receita = this.receitas.get(nome);
         if (receita == null) {
-            throw new IllegalArgumentException("A receita buscada não foi encontrada!");
+            throw new IllegalArgumentException("ERR06 - A receita buscada não existe no sistema!");
         }
         try {
             return receita.clone();
         } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("Não foi possível clonar a receita!");
+            throw new IllegalStateException("ERR08 - Não foi possível clonar a receita!");
         }
     }
 }

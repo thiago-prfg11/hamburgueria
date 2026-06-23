@@ -10,6 +10,6 @@ public class PreparoGrelhado extends PreparoLanche {
     }
 
     protected void prepararProteina(Ingrediente proteina) {
-        etapas.add("Grelhar e Adicionar " + proteina.getNome());
+        etapas.add("Grelhar e Adicionar " + proteina.nome());
     }
 }

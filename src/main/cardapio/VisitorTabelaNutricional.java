@@ -27,6 +27,6 @@ public class VisitorTabelaNutricional implements VisitorItemCardapio {
     }
 
     private String formatarLinha(ItemCardapio item) {
-        return "Lanche: " + item.getDescricao() + " | Calorias: " + item.getCalorias() + "KCal";
+        return "Item: " + item.getDescricao() + " | Calorias: " + item.getCalorias() + "KCal";
     }
 }
